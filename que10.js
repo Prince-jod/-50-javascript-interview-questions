@@ -18,3 +18,13 @@ const b=(a,b)=>{
   console.log("annony",a+b);
 };
 b(2,3);
+// diff between arrow and func declaration
+
+const obj={
+  name:"riya",
+
+  function :function regular(){
+    console.log(this.name);
+  },
+}
+obj.function();
