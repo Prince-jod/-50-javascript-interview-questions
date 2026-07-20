@@ -16,5 +16,5 @@ const a =function(){
 //another 
 const b=(a,b)=>{
   console.log("annony",a+b);
-}
+};
 b(2,3);
