@@ -3,3 +3,5 @@
 var a=10;
 var b="abc";
 console.log(a*b);
+//------or.------------//
+console.log(0/0);
