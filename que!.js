@@ -6,3 +6,12 @@ console.log(a); //10
 console.log(b);
 
 let b=20;
+console.log(b);
+
+// function hoisting 
+
+greet();
+
+function greet(){
+  console.log("hello world");
+}
