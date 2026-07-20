@@ -27,4 +27,4 @@ const obj={
     console.log(this.name);
   },
 }
-// obj.function();
+obj.function();
