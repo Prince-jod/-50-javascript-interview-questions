@@ -6,3 +6,4 @@ console.log(x===y); //output will be false because === operator checks for both 
 //but if we change the type of y to number then output will be true for both == and === operators
 var x=Number(y);
 console.log(x==y);
+console.log(x===y);
