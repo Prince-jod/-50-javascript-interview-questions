@@ -6,3 +6,9 @@ function greet(){
   console.log(this);
 }
 greet();
+
+//--------------//
+"use-strict"
+function another(){
+  console.log(this);
+}
