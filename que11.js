@@ -8,8 +8,10 @@ function greet(){
 // greet();
 
 //--------------//
-"use-strict"
-function another(){
-  console.log(this);
+"use strict";
+
+function greet() {
+    console.log(this);
 }
-console.log(another());
+
+greet();
