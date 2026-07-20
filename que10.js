@@ -38,6 +38,7 @@ const obj={
 obj.regular();
 obj.arrow();
 //one diff is that function declaration has its own this but arrow function take this from its surrounding 
-()=>{
+(()=>{
   console.log("hello");
-}
+})
+();
