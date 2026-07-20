@@ -23,8 +23,17 @@ b(2,3);
 const obj={
   name:"riya",
 
-  function :function regular(){
-    console.log(this.name);
+   regular(){
+    setTimeout(function(){
+      console.log(this.name);
+    },2000);
   },
+  arrow(){
+    setTimeout(()=>{
+      console.log(this.name);
+    },2000);
+  }
+
 }
-obj.function();
+obj.regular();
+obj.arrow();
