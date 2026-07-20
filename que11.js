@@ -12,3 +12,4 @@ function greet(){
 function another(){
   console.log(this);
 }
+another();
