@@ -5,7 +5,7 @@ console.log(this);
 function greet(){
   console.log(this);
 }
-greet();
+// greet();
 
 //--------------//
 "use-strict"
