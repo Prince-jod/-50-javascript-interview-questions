@@ -18,4 +18,4 @@ greet();
 "use strict";
 
 x = 10;
-console.log(x.proto_type.proto_type);
+console.log(x);
