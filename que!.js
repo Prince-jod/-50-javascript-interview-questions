@@ -10,8 +10,14 @@ console.log(b);
 
 // function hoisting 
 
-greet();
+greet(); //function declaratinons are fully hoisted 
 
 function greet(){
   console.log("hello world");
+}
+ 
+//function expressions are not hoisted 
+sayHi(); //typeError: sayhi is not a function
+var sayHi=function(){
+  console.log("hi");
 }
