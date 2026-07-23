@@ -28,4 +28,4 @@ function Person(name){
 console.log(name);
 }
 const p1=new Person("prince");
-p1.Person();
+p1.name();
