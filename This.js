@@ -17,3 +17,7 @@ const obj={
   }
 }
 obj.greet();
+// using inside a object method 
+
+const nav=obj.greet;
+nav();
