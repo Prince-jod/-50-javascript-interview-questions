@@ -9,8 +9,8 @@ arr.map((value,index,arr)=>{
 
 //returning object using map function
 
-const arr=[1,2,3];
-const res=arr.map((num)=>{
+const arr1=[1,2,3];
+const res=arr1.map((num)=>{
   return {
     value:num,
     square:num*num
