@@ -19,6 +19,8 @@ const res=arr1.map((num)=>{
 console.log(res)
 
 //array of object 
+const str="name";
+console.log(str[0]);
 
 const arr2=[
   {name:"pratik",age:212},
