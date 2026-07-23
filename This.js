@@ -28,4 +28,5 @@ function Person(name){
 this.name=name;
 }
 const p1=new Person("prince");
-console.log(p1.name);
+// console.log(p1.name);
+p1.name;
