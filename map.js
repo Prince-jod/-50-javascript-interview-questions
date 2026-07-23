@@ -31,6 +31,7 @@ const res=arr2.map(user=>({
   ...user,
   age:user.age+1,
 }))
+console.log(res);
 arr2.map((x)=>{
   if(x.name[0]==="p"){
     console.log(x.name);
