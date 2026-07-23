@@ -6,3 +6,14 @@ arr.map((value,index,arr)=>{
  console.log(index);
  console.log(arr);
 })
+
+//returning object using map function
+
+const arr=[1,2,3];
+const res=arr.map((num)=>{
+  return {
+    value:num,
+    square:num*num
+  }
+});
+console.log(res)
