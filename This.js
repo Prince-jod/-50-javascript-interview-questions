@@ -8,6 +8,7 @@ console.log(this);
 function greet(){
   console.log(this);
 }
+greet();
 
 //using inside a object   
 const obj={
@@ -16,7 +17,7 @@ const obj={
     console.log(this.name);
   }
 }
-greet();
+// greet();
 obj.greet();
 // using inside a object method --------it will give undefined becasue did not get called by the object in which the methdo is
 
