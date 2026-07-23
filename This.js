@@ -25,7 +25,7 @@ const nav=obj.greet;
 nav();
 
 function Person(name){
-console.log(name);
+console.log(this.name=name);
 }
 const p1=new Person("prince");
 p1.name();
