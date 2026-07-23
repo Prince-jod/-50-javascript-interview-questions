@@ -28,7 +28,7 @@ const arr2=[
   {name:"sunnu",age:232}
 ];
 arr2.map((x)=>{
-  if(x.name[0]===p){
+  if(x.name[0]==="p"){
     console.log(x.name);
   }
 })
