@@ -9,15 +9,16 @@ function greet(){
   console.log(this);
 }
 
-//using inside a object 
+//using inside a object   
 const obj={
   name:"prince",
   greet(){
     console.log(this.name);
   }
 }
+greet();
 obj.greet();
-// using inside a object method 
+// using inside a object method --------it will give undefined becasue did not get called by the object in which the methdo is
 
 const nav=obj.greet;
 nav();
