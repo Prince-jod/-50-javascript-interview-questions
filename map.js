@@ -17,3 +17,14 @@ const res=arr1.map((num)=>{
   }
 });
 console.log(res)
+
+//array of object 
+
+const arr2=[
+  {name:"pratik",age:212},
+  {name:"munnu",age:76},
+  {name:"sunnu",age:232}
+];
+arr2.map((x)=>{
+  console.log(x);
+})
