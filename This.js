@@ -23,3 +23,9 @@ obj.greet();
 
 const nav=obj.greet;
 nav();
+
+function Person(name){
+console.log(name);
+}
+const p1=new Person("prince");
+p1.Person();
