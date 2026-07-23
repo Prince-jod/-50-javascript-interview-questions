@@ -16,3 +16,4 @@ const obj={
     console.log(this.name);
   }
 }
+obj.greet();
