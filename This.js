@@ -3,14 +3,14 @@
 //at global scope 
 console.log(this);
 
-//using in regular function 
+//using in regular function  --this is at the gobal level
 
 function greet(){
   console.log(this);
 }
 greet();
 
-//using inside a object   
+//using inside a object   --this will refer to the object 
 const obj={
   name:"prince",
   greet(){
