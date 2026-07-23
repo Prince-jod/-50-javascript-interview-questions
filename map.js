@@ -26,5 +26,5 @@ const arr2=[
   {name:"sunnu",age:232}
 ];
 arr2.map((x)=>{
-  console.log(x);
+  console.log(x.name);
 })
