@@ -1,0 +1,20 @@
+{
+  "name": "50javascript",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/Prince-jod/-50-javascript-interview-questions#readme",
+  "bugs": {
+    "url": "https://github.com/Prince-jod/-50-javascript-interview-questions/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Prince-jod/-50-javascript-interview-questions.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "map.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
