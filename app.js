@@ -1,7 +1,7 @@
 const http=require('http');
 const port=3000;
 const server=http.createServer((req,res)=>{
- console.log("server is created");
+ console.log(`${req.method} ${req.url}`);
  res.setHeader('Content-type','text/html');
  if(req.url=='/'){
   res.statusCode=200;//ok
