@@ -3,20 +3,24 @@ const port=3000;
 const server=http.createServer((req,res)=>{
  console.log(`${req.method} ${req.url}`);
  res.setHeader('Content-type','text/html');
- if(req.url=='/'){
-  res.statusCode=200;//ok
-  res.end("Home page");
- }
- else{
-  if(req.url=='/task'){
-    res.statusCode=200;//ok
-    res.end("this is the task page ")
+if(req.url==='/'){
+  res.setHeader('Content-type','text/html');
+  res.end(
+    `<form action="/message" method="POST">
+    <label>Home:</label>
+    <input type="text" name="username"></input>
+    <button type="submit">Add</button>
+
+
+    </form>
+    `
+  )
+}
+else{
+  if(req.url==='/message'){
+    res.end("you are on message route");
   }
-  else{
-    res.statusCode=404;//ok
-    res.end("not found the page");
-  }
- }
+}
 })
 server.listen(port,()=>{
   console.log(`server is listing at ${port}`);
