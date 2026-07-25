@@ -22,7 +22,7 @@ else{
     let datachunks=[];
     req.on('data',(chunks)=>{
       console.log(chunks);
-      datachunks.puhs(chunks);
+      datachunks.push(chunks);
     })
   }
 }
