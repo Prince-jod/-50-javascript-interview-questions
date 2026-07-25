@@ -28,7 +28,7 @@ else{
     req.on('end',()=>{
       let combined=Buffer.concat(datachunks);
       console.log(combined.toString());
-      let value=combined.toString().split("=");
+      let value=combined.toString().split("=")[1]||'';
       console.log(value);
       fs.writeFile("formvalue.txt",value,(err)=>{
         res.statusCode=302; //for the redirect 
