@@ -18,7 +18,12 @@ if(req.url==='/'){
 }
 else{
   if(req.url==='/message'){
-    res.end("you are on message route");
+    res.setHeader('Content-type','text/html');
+    let datachunks=[];
+    req.on('data',(chunks)=>{
+      console.log(chunks);
+      datachunks.puhs(chunks);
+    })
   }
 }
 })
