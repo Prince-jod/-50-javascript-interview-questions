@@ -55,6 +55,9 @@ const requestHandler=(req,res)=>{
     }
   }
 }
+const anotherFunction=()=>{
+  console.log("this is another function ");
+}
 //diff way of exporting the file 
 
 module.exports=requestHandler;
