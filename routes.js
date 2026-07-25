@@ -37,11 +37,11 @@ const requestHandler=(req,res)=>{
         console.log(combined.toString());
         
         let value = combined.toString().split("=")[1]; 
-        let decodedValue = decodeURIComponent(value.replace(/\+/g, ' ')); // Fix spaces/symbols
+        // let decodedValue = decodeURIComponent(value.replace(/\+/g, ' ')); // Fix spaces/symbols
         
         console.log(decodedValue);
         
-        fs.writeFile("formvalue.txt", decodedValue, (err) => {
+        fs.writeFile("formvalue.txt", value, (err) => {
           res.statusCode = 302; 
           res.setHeader("Location", '/');
           res.end();
