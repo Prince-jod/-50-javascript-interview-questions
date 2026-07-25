@@ -60,4 +60,7 @@ const anotherFunction=()=>{
 }
 //diff way of exporting the file 
 
-module.exports=requestHandler;
+module.exports={
+  requestHandler,
+  anotherFunction
+}
