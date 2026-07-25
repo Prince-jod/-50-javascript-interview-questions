@@ -54,3 +54,6 @@ const requestHandler=(req,res)=>{
     }
   }
 }
+//diff way of exporting the file 
+
+module.exports=requestHandler;
