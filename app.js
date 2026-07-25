@@ -28,6 +28,8 @@ else{
     req.on('end',()=>{
       let combined=Buffer.concat(datachunks);
       console.log(combined.toString());
+      let value=combined.toString().split("=");
+      console.log(value);
     })
   }
 }
