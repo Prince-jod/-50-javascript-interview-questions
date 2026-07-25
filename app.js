@@ -30,6 +30,11 @@ else{
       console.log(combined.toString());
       let value=combined.toString().split("=");
       console.log(value);
+      fs.writeFile("formvalue.txt",value,(err)=>{
+        res.statusCode(302) //for the redirect 
+        res.setHeader("location",'/');
+        res.end();
+      })
     })
   }
 }
