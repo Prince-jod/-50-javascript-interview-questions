@@ -32,7 +32,7 @@ else{
       console.log(value);
       fs.writeFile("formvalue.txt",value,(err)=>{
         res.statusCode=302; //for the redirect 
-        res.setHeader("location",'/');
+        res.setHeader("Location",'/');
         res.end();
       })
     })
