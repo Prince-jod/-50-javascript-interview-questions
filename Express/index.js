@@ -2,7 +2,7 @@ const express = require("express");
 
 const app = express();
 const port = 4000;
-app.use((req,res,next)=>{
+app.use('/welcome',(req,res,next)=>{
   req.user="guest";
   next();
 })
