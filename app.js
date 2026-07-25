@@ -27,11 +27,12 @@ else{
     })
     req.on('end',()=>{
       let combined=Buffer.concat(datachunks);
-      console.log(comined.toString());
+      console.log(combined.toString());
     })
   }
 }
 })
+
 server.listen(port,()=>{
   console.log(`server is listing at ${port}`);
 })
