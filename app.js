@@ -1,4 +1,5 @@
 const http=require('http');
+const fs=require('fs');
 const port=3000;
 const server=http.createServer((req,res)=>{
  console.log(`${req.method} ${req.url}`);
@@ -23,6 +24,10 @@ else{
     req.on('data',(chunks)=>{
       console.log(chunks);
       datachunks.push(chunks);
+    })
+    req.on('end',()=>{
+      let combined=Buffer.concat(datachunks);
+      console.log(comined.toString());
     })
   }
 }
