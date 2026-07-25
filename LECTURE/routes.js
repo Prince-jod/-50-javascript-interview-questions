@@ -3,3 +3,6 @@ const handler=(req,res)=>{
     res.end("this is the home page");
   }
 }
+module.exports={
+  handler
+}
