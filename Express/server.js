@@ -1,12 +1,16 @@
 const express = require("express");
 
-const server = express();
+const app = express();
 const port = 8000;
-server.get("/", (req, res) => {
+app.use((req,res,next)=>{
+  req.user="guest";
+  next();
+})
+app.get("/", (req, res) => {
     res.set("Content-Type", "text/html");
-    res.send("<h1>Hello Express</h1>");
+    res.send(`<h1>${req.user}</h1>`);
 });
 
-server.listen(port, () => {
+app.listen(port, () => {
   console.log(`Server is up and running on port ${port}! Ready to handle requests.`);
 });
