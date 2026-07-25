@@ -1,3 +1,4 @@
+const fs = require('fs');
 const requestHandler=(req,res)=>{
   console.log(`${req.method} ${req.url}`);
 
