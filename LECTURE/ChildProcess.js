@@ -1,6 +1,6 @@
 //using fork and spawn child process 
 
-const fib=(n)=>(n<=2 ? 1 : fib(n-1) + fib(n-2));
+const {fork}=require("child_process");
 
 console.log("executing");
 console.log(fib(40));
