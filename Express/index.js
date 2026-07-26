@@ -2,19 +2,12 @@ const express = require("express");
 
 const app = express();
 const PORT = 3000;
-
+const orderRouter=require('./Router/Order');
 // GET /orders
 app.get('/',(req,res)=>{
     res.send("welocme to the server first page");
 })
-app.get("/orders", (req, res) => {
-    res.send("Here is the list of all orders.");
-});
-
-// POST /orders
-app.post("/orders", (req, res) => {
-    res.send("A new order has been created.");
-});
+app.use('/order',orderRouter)
 
 // GET /users
 app.get("/users", (req, res) => {
