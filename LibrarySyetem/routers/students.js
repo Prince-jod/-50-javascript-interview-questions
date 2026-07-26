@@ -22,7 +22,7 @@ router.get("/:id", (req, res) => {
     const student=students.find((stu)=>stu.id===id);
     if(!student){
         return res.status(404).json({
-            message:"student not found";
+            message:"student not found",
         })
     }
     res.json(student);
