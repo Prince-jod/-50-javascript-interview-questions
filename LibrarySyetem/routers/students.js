@@ -2,9 +2,18 @@ const express = require("express");
 
 const router = express.Router();
 
+const students = [
+
+{ id: 1, name: "Alice" },
+
+{ id: 2, name: "Bob" },
+
+{ id: 3, name: "Charlie" }
+
+];
 // GET /students
 router.get("/", (req, res) => {
-    res.send("List of all students");
+    res.json(students);
 });
 
 // GET /students/:id
