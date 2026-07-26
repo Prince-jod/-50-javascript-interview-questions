@@ -18,8 +18,14 @@ router.get("/", (req, res) => {
 
 // GET /students/:id
 router.get("/:id", (req, res) => {
-    const id = req.params.id;
-    res.send(`Student ID: ${id}`);
+    const id = parseInt(req.params.id);
+    const student=students.find((stu)=>stu.id===id);
+    if(!student){
+        return res.status(404).json({
+            message:"student not found";
+        })
+    }
+    res.json(student);
 });
 
 module.exports = router;
