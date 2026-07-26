@@ -3,8 +3,8 @@ const express = require("express");
 const app = express();
 const PORT = 4000;
 
-const studentRouter = require("./routes/students");
-const courseRouter = require("./routes/courses");
+const studentRouter = require("./routers/students");
+const courseRouter = require("./routers/courses");
 
 // Home Route
 app.get("/", (req, res) => {
