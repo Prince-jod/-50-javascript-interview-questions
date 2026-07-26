@@ -2,7 +2,7 @@ const express=require('express');
 const router=express.Router();
 
 router.get('/',(req,res)=>{
-  req.setHeader('Content-type','text/html');
+  res.setHeader('Content-type','text/html');
   res.send(`
   <h1>    Here is the list of books! </h1>
     `)
