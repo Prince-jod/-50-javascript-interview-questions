@@ -1,13 +1,16 @@
-const express=require('express');
-const router=express.Router();
+const express = require("express");
 
-router.get('/',(req,res)=>{
-  res.setHeader('Content-type','text/html');
-  res.send(`
-  <h1>    Here is the list of books! </h1>
-    `)
+const router = express.Router();
+
+// GET /students
+router.get("/", (req, res) => {
+    res.send("List of all students");
 });
-router.post('/',(req,res)=>{
-  res.send("Book has been added!");
-})
-module.exports=router;
+
+// GET /students/:id
+router.get("/:id", (req, res) => {
+    const id = req.params.id;
+    res.send(`Student ID: ${id}`);
+});
+
+module.exports = router;
