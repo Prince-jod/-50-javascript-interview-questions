@@ -7,7 +7,7 @@ const orderRouter=require('./Router/Order');
 app.get('/',(req,res)=>{
     res.send("welocme to the server first page");
 })
-app.use('/order',orderRouter)
+app.use('/order',orderRouter);
 
 // GET /users
 app.get("/users", (req, res) => {
