@@ -3,6 +3,11 @@ const express = require("express");
 const app = express();
 const PORT = 3000;
 
+app.use((req, res,next) => {
+    res.send(`this is ur url -${req.url} and this is your method ${req.method}`);
+    next();
+});
+
 // GET /products
 app.get("/products/:name", (req, res) => {
   const params=req.params.name;
@@ -27,9 +32,7 @@ app.post("/categories", (req, res) => {
 });
 
 // Wildcard route (must be the last route)
-app.use((req, res) => {
-    res.status(404).send("<h1>404 - Page Not Found</h1>");
-});
+
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
