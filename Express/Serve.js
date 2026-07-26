@@ -3,8 +3,9 @@ const express = require("express");
 const app = express();
 const PORT = 3000;
 
-app.use((req, res,next) => {
-    res.send(`this is ur url -${req.url} and this is your method ${req.method}`);
+// Logging Middleware
+app.use((req, res, next) => {
+    console.log(`${req.method} request made to ${req.url}`);
     next();
 });
 
