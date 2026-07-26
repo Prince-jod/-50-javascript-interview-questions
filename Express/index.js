@@ -2,7 +2,7 @@ const express = require("express");
 
 const app = express();
 const PORT = 3000;
-const orderRouter=require('./Router/Order');
+const orderRouter=require('./Routers/Order');
 // GET /orders
 app.get('/',(req,res)=>{
     res.send("welocme to the server first page");
