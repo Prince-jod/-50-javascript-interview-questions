@@ -4,8 +4,11 @@ const app = express();
 const PORT = 3000;
 
 // GET /products
-app.get("/products", (req, res) => {
-    res.send("Here is the list of all products.");
+app.get("/products/:name", (req, res) => {
+    res.send({
+      params:req.params,
+      query:req.query
+});
 });
 
 // POST /products
