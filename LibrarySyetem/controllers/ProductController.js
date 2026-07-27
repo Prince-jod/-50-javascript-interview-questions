@@ -9,4 +9,6 @@ const courses = [
 const getProduct=(req,res)=>{
   res.json(courses);
 }
-module.exports=getProduct;
+module.exports={
+  getProduct,
+}
