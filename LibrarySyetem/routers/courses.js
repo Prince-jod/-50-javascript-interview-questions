@@ -1,17 +1,9 @@
 const express = require("express");
 
 const router = express.Router();
-const courses = [
-
-{ id: 1, name: "Frontend", description: "HTML, CSS, JS, React" },
-
-{ id: 2, name: "Backend", description: "Node.js, Express, MongoDB" }
-
-];
+const ProductController=require('../controllers/ProductController');
 // GET /courses
-router.get("/", (req, res) => {
-    res.json(courses);
-});
+router.get("/", );
 
 // GET /courses/:id
 router.get("/:id", (req, res) => {
