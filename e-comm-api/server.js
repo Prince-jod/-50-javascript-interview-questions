@@ -4,7 +4,7 @@ const app = express();
 
 app.use(express.json());
 
-const productRoutes = require("./routes/productRoutes");
+const productRoutes = require("./routers/productRoutes");
 
 app.use("/products", productRoutes);
 
