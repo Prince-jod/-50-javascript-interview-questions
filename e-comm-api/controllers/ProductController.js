@@ -39,7 +39,7 @@ const createProduct = (req, res) => {
   //   message: "Adding a new product",
   //   data: product,
   // });
-  res.json({"value":"sharpener"});
+  res.json({value:"sharpener"});
 };
 
 module.exports = {
