@@ -33,12 +33,13 @@ const getProduct = (req, res) => {
 
 // POST /products
 const createProduct = (req, res) => {
-  const product = productService.addProduct(req.body);
+  // const product = productService.addProduct(req.body);
 
-  res.status(201).json({
-    message: "Adding a new product",
-    data: product,
-  });
+  // res.status(201).json({
+  //   message: "Adding a new product",
+  //   data: product,
+  // });
+  res.json({"value":"sharpener"});
 };
 
 module.exports = {
