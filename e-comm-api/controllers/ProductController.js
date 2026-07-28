@@ -1,15 +1,16 @@
 // controllers/productController.js
-
+const path=require('path');
 const productService = require("../services/productService");
 
 // GET /products
 const getProducts = (req, res) => {
-  const products = productService.getAllProducts();
+  // const products = productService.getAllProducts();
 
-  res.json({
-    message: "Fetching all products",
-    data: products,
-  });
+  // res.json({
+  //   message: "Fetching all products",
+  //   data: products,
+  // });
+  res.sendFile(path.join(__dirname,"..","view","product.html"))
 };
 
 // GET /products/:id
