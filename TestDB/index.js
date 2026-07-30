@@ -25,7 +25,7 @@ connection.connect((err)=>{
   )`
   connection.execute(createtable,(err)=>{
     if(err){
-      console.log(err);
+      console.log("query has an error",err);
       return ;
     }
     console.log("table is created");
