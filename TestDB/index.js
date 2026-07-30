@@ -18,10 +18,10 @@ connection.connect((err)=>{
 
 
   //making query for database
-  const createtable=`create table(
+  const createtable=`create table Employees(
   id int auto_increment primary key,
   name varchar(12) not null,
-  dept_id int default '34'
+  dept_id int default 34
   )`
   connection.execute(createtable,(err)=>{
     if(err){
