@@ -1,78 +1,90 @@
-const express =require('express');
-const app=express();
-const mysql=require('mysql2');
-const port=4000;
-const connection=mysql.createConnection({
-  host:'localhost',
-  user:'root',
-  password:'Prince007@',
-  database:'testdb'
+const express = require('express');
+const app = express();
+
+const mysql = require('mysql2');
+
+const port = 4000;
+
+const connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: 'Prince007@',
+    database: 'testdb'
 });
-connection.connect((err)=>{
-  if(err){
-    console.log(err);
-    return ;
-  }
-  
-  console.log(`database is connected`);
 
-
-  //making query for database
-  const createtable=`create table Employees(
-  id int auto_increment primary key,
-  name varchar(12) not null,
-  dept_id int default 34
-  )`
-  connection.execute(createtable,(err)=>{
-    if(err){
-      console.log("query has an error",err);
-      return ;
+connection.connect((err) => {
+    if (err) {
+        console.log(err);
+        return;
     }
-    console.log("table is created");
-  });
-  
-})
-app.get('/',(req,res)=>{
-  res.send("shame on youhh mf!!")
-})
-app.listen(port,(err)=>{
-  console.log("server is running on ",port);
+
+    console.log("Database connected");
+
+    // Users Table
+    const createUsersTable = `
+    CREATE TABLE IF NOT EXISTS Users (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(100) NOT NULL,
+        email VARCHAR(100) UNIQUE NOT NULL
+    )`;
+
+    // Buses Table
+    const createBusesTable = `
+    CREATE TABLE IF NOT EXISTS Buses (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        busNumber VARCHAR(20) NOT NULL UNIQUE,
+        totalSeats INT NOT NULL,
+        availableSeats INT NOT NULL
+    )`;
+
+    // Bookings Table
+    const createBookingsTable = `
+    CREATE TABLE IF NOT EXISTS Bookings (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        user_id INT NOT NULL,
+        bus_id INT NOT NULL,
+        seatNumber VARCHAR(10) NOT NULL,
+        bookingDate DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES Users(id),
+        FOREIGN KEY (bus_id) REFERENCES Buses(id)
+    )`;
+
+    // Payments Table
+    const createPaymentsTable = `
+    CREATE TABLE IF NOT EXISTS Payments (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        booking_id INT NOT NULL,
+        amountPaid DECIMAL(10,2) NOT NULL,
+        paymentStatus ENUM('Pending','Success','Failed') NOT NULL,
+        paymentDate DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (booking_id) REFERENCES Bookings(id)
+    )`;
+
+    connection.execute(createUsersTable, (err) => {
+        if (err) return console.log(err);
+        console.log("Users table created");
+    });
+
+    connection.execute(createBusesTable, (err) => {
+        if (err) return console.log(err);
+        console.log("Buses table created");
+    });
+
+    connection.execute(createBookingsTable, (err) => {
+        if (err) return console.log(err);
+        console.log("Bookings table created");
+    });
+
+    connection.execute(createPaymentsTable, (err) => {
+        if (err) return console.log(err);
+        console.log("Payments table created");
+    });
 });
-// const express=require('express');
-// const app=express();
-// const port=4000;
-// const mysql=require('mysql2');
-// const connection=mysql.createConnection({
-//   host:'localhost',
-//   user:'root',
-//   password:'Prince007@',
-//   database:'testdb'
-// });
-// connection.connect((err)=>{
-//   if(err){
-//     console.log(err);
-//     return
-//   }
-//   console.log("connection is made with datbase");
 
-//   const createquery=`create table newone(
-  
-//   )`
-//   connection.exexute(createquery,(err)=>{
-//     if(err){
-//       console.log("");
-//       return;
-//     }
-//     console.log("table is created");
+app.get('/', (req, res) => {
+    res.send("Database Connected Successfully");
+});
 
-//   })
-// })
-
-
-// app.get('/',(req,res)=>{
-//   res.send("hello mf wriiteen by myself");
-// })
-
-// app.listen(port,()=>{
-// console.log(`server is running`);
-// });
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+});
