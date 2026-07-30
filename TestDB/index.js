@@ -13,9 +13,17 @@ connection.connect((err)=>{
     console.log(err);
     return ;
   }
-  else{
+  
   console.log(`database is connected`);
-  }
+
+
+  //making query for database
+  const createtable=`create table(
+  id int primary key,
+  name varchar(12) not null,
+  dept_id int default '34'
+  )`
+  
 })
 app.get('/',(req,res)=>{
   res.send("shame on youhh mf!!")
