@@ -38,3 +38,41 @@ app.get('/',(req,res)=>{
 app.listen(port,(err)=>{
   console.log("server is running on ",port);
 });
+// const express=require('express');
+// const app=express();
+// const port=4000;
+// const mysql=require('mysql2');
+// const connection=mysql.createConnection({
+//   host:'localhost',
+//   user:'root',
+//   password:'Prince007@',
+//   database:'testdb'
+// });
+// connection.connect((err)=>{
+//   if(err){
+//     console.log(err);
+//     return
+//   }
+//   console.log("connection is made with datbase");
+
+//   const createquery=`create table newone(
+  
+//   )`
+//   connection.exexute(createquery,(err)=>{
+//     if(err){
+//       console.log("");
+//       return;
+//     }
+//     console.log("table is created");
+
+//   })
+// })
+
+
+// app.get('/',(req,res)=>{
+//   res.send("hello mf wriiteen by myself");
+// })
+
+// app.listen(port,()=>{
+// console.log(`server is running`);
+// });
