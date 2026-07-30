@@ -21,10 +21,14 @@ connection.connect((err)=>{
   const createtable=`create table(
   id int auto_increment primary key,
   name varchar(12) not null,
-  dept_id int 
+  dept_id int default '34'
   )`
   connection.execute(createtable,(err)=>{
-    console.log(err);
+    if(err){
+      console.log(err);
+      return ;
+    }
+    console.log("table is created");
   });
   
 })
