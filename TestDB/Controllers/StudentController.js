@@ -1,4 +1,6 @@
 const addEntries=(req,res)=>{
   
 }
-module.exports=add;
+module.exports={
+  addEntries,
+}
