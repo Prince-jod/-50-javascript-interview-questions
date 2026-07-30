@@ -11,8 +11,11 @@ const connection=mysql.createConnection({
 connection.connect((err)=>{
   if(err){
     console.log(err);
+    return ;
   }
+  else{
   console.log(`database is connected`);
+  }
 })
 app.get('/',(req,res)=>{
   res.send("shame on youhh mf!!")
