@@ -19,7 +19,7 @@ connection.connect((err)=>{
 
   //making query for database
   const createtable=`create table(
-  id int primary key,
+  id int auto_increment primary key,
   name varchar(12) not null,
   dept_id int default '34'
   )`
