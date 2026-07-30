@@ -23,6 +23,9 @@ connection.connect((err)=>{
   name varchar(12) not null,
   dept_id int default '34'
   )`
+  connection.execute(createtable,(err)=>{
+    console.log(err);
+  });
   
 })
 app.get('/',(req,res)=>{
