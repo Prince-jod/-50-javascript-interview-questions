@@ -7,6 +7,12 @@ const connection=mysql.createConnection({
   user:'root',
   password:'Prince007@',
   database:'testdb'
+});
+connection.connect((err)=>{
+  if(err){
+    console.log(err);
+  }
+  console.log(`database is connected`);
 })
 app.get('/',(req,res)=>{
   res.send("shame on youhh mf!!")
