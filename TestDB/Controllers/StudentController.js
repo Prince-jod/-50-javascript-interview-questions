@@ -1,4 +1,4 @@
-const add=(req,res)=>{
+const addEntries=(req,res)=>{
   
 }
 module.exports=add;
