@@ -5,7 +5,7 @@ const db=require('./utils/db-connection')
 const studentRoutes=require('./Routers/StudentRoutes');
 const port = 4000;
 
-
+app.use(express.json());
 
 app.get('/', (req, res) => {
     res.send("Database Connected Successfully");
