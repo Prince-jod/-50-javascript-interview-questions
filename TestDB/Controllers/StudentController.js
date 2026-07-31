@@ -14,26 +14,29 @@ if (err) {
 })
 
 }
-const updateEntry=(req,res)=>{
-  const {id}=req.params;
-  const {name,dept_id}=req.body
+const updateEntry = (req, res) => {
+    const { id } = req.params;
+    const { name, dept_id } = req.body;
 
-  const updatequery=`update employees set name=? where id =?`;
+    const updatequery = `
+        UPDATE employees
+        SET name = ?, dept_id = ?
+        WHERE id = ?
+    `;
 
-db.execute(updatequery,[id,name,dept_id],(err,result)=>{
- if(err){
-  console.log(err.message);
-  res.status(500).send(err.message)
-  db.end();
-  return;
- }
- if(result.affectedRows===0){
-  res.status(404).send("student not found");
- }
- res.status(200).send("updatetd");
- 
-})
-}
+    db.execute(updatequery, [name, dept_id, id], (err, result) => {
+        if (err) {
+            console.log(err.message);
+            return res.status(500).send(err.message);
+        }
+
+        if (result.affectedRows === 0) {
+            return res.status(404).send("Employee not found");
+        }
+
+        res.status(200).send("Updated successfully");
+    });
+};
 module.exports={
   addEntries,
   updateEntry
