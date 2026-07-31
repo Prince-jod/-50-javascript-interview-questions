@@ -1,5 +1,5 @@
 const express = require("express");
-
+const db=require('../utils/db-connection');
 const app = express();
 
 const studentRoutes = require("./Routers/StudentRoutes");
@@ -7,6 +7,7 @@ const studentRoutes = require("./Routers/StudentRoutes");
 app.use(express.json());
 
 app.use("/students", studentRoutes);
+
 
 app.listen(4000, () => {
 
