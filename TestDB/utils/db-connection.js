@@ -17,7 +17,7 @@ const sequelize=new Sequelize('testdb','root','Prince007@',{
     }
 )
 ();
-model.exports=sequelize;
+module.exports=sequelize;
 
 
 
