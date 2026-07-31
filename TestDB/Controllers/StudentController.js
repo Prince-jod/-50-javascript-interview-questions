@@ -1,7 +1,7 @@
 const db=require('../utils/db-connection');
 
 const addEntries=(req,res)=>{
-const [email,name]=req.body; // taking data my body
+const {email,name}=req.body; // taking data my body
 const insertquery=`INSERT INTO (email,name) VALUE (?,?)`;
 db.execute(insertquery,[email,name],(err)=>{
   if(err){
@@ -10,7 +10,7 @@ db.execute(insertquery,[email,name],(err)=>{
   return;
   }
   console.log("inserted successfully ");
-  
+
 })
 }
 module.exports={
