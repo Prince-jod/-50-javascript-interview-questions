@@ -1,17 +1,15 @@
-const express = require('express');
+const express = require("express");
+
 const app = express();
 
-const db=require('./utils/db-connection')
-const studentRoutes=require('./Routers/StudentRoutes');
-const port = 4000;
+const studentRoutes = require("./Routers/StudentRoutes");
 
 app.use(express.json());
 
-app.get('/', (req, res) => {
-    res.send("Database Connected Successfully");
-});
-app.use('/students',studentRoutes);
+app.use("/students", studentRoutes);
 
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+app.listen(4000, () => {
+
+    console.log("Server Running On Port 4000");
+
 });
