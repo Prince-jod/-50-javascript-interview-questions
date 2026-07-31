@@ -2,7 +2,7 @@ const {Sequelize} =require('Sequelize');
 
 const sequelize=new Sequelize('testdb','root','Prince007@',{
     host:'localhost',
-    dialect:'Mysql'
+    dialect:'mysql'
 });
 
 (
