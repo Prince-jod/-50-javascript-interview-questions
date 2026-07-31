@@ -2,7 +2,7 @@ const db=require('../utils/db-connection');
 
 const addEntries=(req,res)=>{
 const {id,name,dept_id}=req.body; // taking data my body
-const insertquery=`INSERT INTO buses VALUE (?,?,?)`;
+const insertquery=`INSERT INTO employees VALUE (?,?,?)`;
 db.execute(insertquery,[id,name,dept_id],(err)=>{
 if (err) {
     console.log(err);
