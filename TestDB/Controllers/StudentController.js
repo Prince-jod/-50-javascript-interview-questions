@@ -5,7 +5,7 @@ const {id,name,dept_id}=req.body; // taking data my body
 const insertquery=`INSERT INTO buses VALUE (?,?,?)`;
 db.execute(insertquery,[id,name,dept_id],(err)=>{
   if(err){
-  connection.end();
+  db.end();
   return;
   }
   console.log("inserted successfully ");
