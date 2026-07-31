@@ -1,5 +1,4 @@
 const db=require('../utils/db-connection');
-console.log('auiasaggdusagdusag')
 const addEntries=(req,res)=>{
 const {id,name,dept_id}=req.body; // taking data my body
 const insertquery=`INSERT INTO employees VALUE (?,?,?)`;
