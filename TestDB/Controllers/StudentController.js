@@ -8,7 +8,9 @@ db.execute(insertquery,[id,name,dept_id],(err)=>{
   db.end();
   return;
   }
-  console.log("inserted successfully ");
+ res.status(201).json({
+    message: "Inserted successfully"
+});
 
 })
 }
