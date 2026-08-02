@@ -4,7 +4,7 @@ const sequelize=require('../config/db');
 
 const User=sequelize.define("User", {
   name:{
-    type:DayaTypes.STRING,
+    type:DataTypes.STRING,
     allowNull:false
   },
   email:{
@@ -13,7 +13,7 @@ const User=sequelize.define("User", {
     unique:true
   },
   phone:{
-   type:DataTypes.INTEGER,
+   type:DataTypes.STRING,
    allowNull:true,
    unique:true
   }
