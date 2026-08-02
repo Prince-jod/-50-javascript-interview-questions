@@ -15,17 +15,20 @@ const createUser = async (req, res) => {
     }
 };
 
-const GetUser=async (req,res)=>{
-  try{
-    const users= await  User.findAll();
+const getUsers = async (req, res) => {
+  try {
+    const users = await User.findAll();
 
-    res.json(users);
+    res.status(200).json(users);
+  } catch (err) {
+    res.status(500).json({
+      message: err.message,
+    });
   }
-  catch(err){
-    res.status(500).json({message:err.message});
-  }
-}
+};
 
 module.exports = {
-    createUser
+    createUser,
+    getUsers,
+    
 };
