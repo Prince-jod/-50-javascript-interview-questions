@@ -1,5 +1,5 @@
-const User = require("../models/User");
-const Aadhaar = require("../models/Aadhaar");
+const User = require("../Models/User");
+const Aadhaar = require("../Models/Aadhaar");
 
 // One User has One Aadhaar
 User.hasOne(Aadhaar, {
