@@ -16,8 +16,7 @@ app.use(express.json());
 app.use("/users", userRoutes);
 
 // Database Connection & Table Creation
-sequelize
-  .sync()
+sequelize.sync({ alter: true })
   .then(() => {
     console.log("Database connected and table created successfully.");
     app.listen(PORT, () => {
