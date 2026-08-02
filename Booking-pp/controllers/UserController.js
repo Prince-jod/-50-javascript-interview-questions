@@ -26,9 +26,60 @@ const getUsers = async (req, res) => {
     });
   }
 };
+const updateUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const user = await User.findByPk(id);
+
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found"
+      });
+    }
+
+    await user.update(req.body);
+
+    res.status(200).json({
+      message: "User updated successfully",
+      user
+    });
+  } catch (err) {
+    res.status(500).json({
+      message: err.message
+    });
+  }
+};
+const deleteUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const user = await User.findByPk(id);
+
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found"
+      });
+    }
+
+    await user.destroy();
+
+    res.status(200).json({
+      message: "User deleted successfully"
+    });
+
+  } catch (err) {
+    res.status(500).json({
+      message: err.message
+    });
+  }
+};
+
 
 module.exports = {
     createUser,
     getUsers,
-    
+    updateUser,
+    deleteUser
+
 };
