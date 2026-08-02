@@ -1,8 +1,8 @@
 const {Sequelize}=require('sequelize');
 
-const sequelize=new Sequelize('testdb','root','Prince007@',{
-  user:'root',
-  dialect:'mysql'
+const sequelize = new Sequelize("testdb", "root", "Prince007@", {
+    host: "localhost",
+    dialect: "mysql"
 });
 
 sequelize.authenticate()
