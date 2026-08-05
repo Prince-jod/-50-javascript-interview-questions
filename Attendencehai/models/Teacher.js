@@ -20,7 +20,7 @@ const Teacher=sequelize.define("Teacher",{
     type:DataTypes.STRING(300),
     allowNull:false,
     unique:true,
-    vlaidate:{
+    validate:{
       idEmail:true,
       notEmpty:true,
     }
