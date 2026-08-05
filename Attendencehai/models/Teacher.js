@@ -21,7 +21,7 @@ const Teacher=sequelize.define("Teacher",{
     allowNull:false,
     unique:true,
     validate:{
-      idEmail:true,
+      isEmail:true,
       notEmpty:true,
     }
   },
