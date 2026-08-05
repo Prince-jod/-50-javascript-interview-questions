@@ -9,7 +9,7 @@ const sequelize=new Sequelize( //here we are telling to the sequelize that which
 
   process.env.DB_NAME,
   process.env.DB_USER,
-  process.env,DB_PASSWORD,
+  process.env.DB_PASSWORD,
   {
     host:process.env.DB_HOST,
     dialect:process.env.DB_DIALECT,
