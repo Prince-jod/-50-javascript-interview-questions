@@ -20,11 +20,11 @@ const Student=sequelize.define("Student",{
     }
   },
   rollNumber:{
-    type:DataTypes.SRTING(200),
+    type:DataTypes.STRING(200),
     allowNull:false,
     unique:true,
     validate:{
-      isEmpty:false
+      notEmpty:false
     }
   },
   section: {
