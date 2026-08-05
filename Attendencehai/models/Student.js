@@ -17,7 +17,7 @@ const Student=sequelize.define("Student",{
     }
   },
   rollNumber:{
-    type:DataTypes.STRING(200),
+    type:DataTypes.STRING(30),
     allowNull:false,
     unique:true,
     validate:{
