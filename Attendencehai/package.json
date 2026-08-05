@@ -1,0 +1,18 @@
+{
+  "name": "attendencehai",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "mysql2": "^3.23.2",
+    "nodemon": "^3.1.14",
+    "sequelize": "^6.37.8"
+  }
+}
