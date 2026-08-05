@@ -1,4 +1,6 @@
-const {DataTypes}=require('sequelize');
+const {DataTypes}=require('sequelize'); // we imported the datatypes so we can give needed datatype according to the table constraints and type
+
+//here we are importing the database becasue we want to set in that in which database table need to be saved on 
 const sequelize=require('../config/db');
 
 
