@@ -8,9 +8,6 @@ const Student=sequelize.define("Student",{
     type:DataTypes.INTEGER,
     autoIncrement:true,
     primaryKey:true,
-    validate:{
-      notEmpty:true
-    }
   },
   name:{
     type:DataTypes.STRING(30),
