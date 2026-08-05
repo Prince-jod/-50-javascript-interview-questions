@@ -11,11 +11,11 @@ Attendence.belongsTo(Teacher,{
   foreignKey:"teacherid"
 });
 // students<------>Attendence
-Student.hasMany(Attendance, {
+Student.hasMany(Attendence, {
   foreignKey: "studentId",
 });
 
-Attendance.belongsTo(Student, {
+Attendence.belongsTo(Student, {
   foreignKey: "studentId",
 });
 
