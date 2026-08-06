@@ -58,11 +58,7 @@ const getAllStudents= async (req,res)=>{
     })
   }
 }
-module.exports={
-  createStudent,
-  getAllStudents
 
-}
 
 const getStudentById=async (req,res)=>{
   try{
@@ -86,4 +82,10 @@ catch(err){
     err
   })
 }
+}
+module.exports={
+  createStudent,
+  getAllStudents,
+  getStudentById
+
 }
