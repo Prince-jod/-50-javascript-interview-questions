@@ -4,7 +4,7 @@ const path = require("path");
 require("dotenv").config();
 
 const sequelize = require("./config/db");
-require('./models');
+require("./models/Association");
 const authRoutes = require("./routes/auth.routes");
 
 const app = express();
@@ -25,6 +25,10 @@ sequelize
   });
 
 const port = 3000;
+
+app.get('/',(req,res)=>{
+  res.sendFile(path.join(__dirname,'public','login.html'));
+})
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

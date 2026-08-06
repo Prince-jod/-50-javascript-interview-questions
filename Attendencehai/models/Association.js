@@ -2,13 +2,13 @@ const Teacher=require('./Teacher');
 const Student=require('./Student');
 
 const Attendence=require('./Attendence');
-  //teacher <-----> Attendence
+ // teacher <-----> Attendence
 Teacher.hasMany(Attendence,{
-  foreignKey:"teacherid"
+  foreignKey:"teacherId"
 });
 
 Attendence.belongsTo(Teacher,{
-  foreignKey:"teacherid"
+  foreignKey:"teacherId"
 });
 // students<------>Attendence
 Student.hasMany(Attendence, {

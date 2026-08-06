@@ -1,8 +1,8 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/db");
 
-const Attendance = sequelize.define(
-  "Attendance",
+const Attendence = sequelize.define(
+  "Attendence",
   {
     id: {
       type: DataTypes.INTEGER,
@@ -43,4 +43,4 @@ const Attendance = sequelize.define(
   }
 );
 
-module.exports = Attendance;
+module.exports = Attendence;
