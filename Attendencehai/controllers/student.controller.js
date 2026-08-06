@@ -86,18 +86,58 @@ catch(err){
 }
 
 
-const UpdateStudent=async (req,res)=>{
-  try{
-    const {id}=req.params;
-    
-    const student=await Student.findByPk(id);
-    if(!student){
+const updateStudent = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Check if student exists
+    const student = await Student.findByPk(id);
+
+    if (!student) {
       return res.status(404).json({
-        message: "student does not exists",
-      })
+        message: "Student does not exist",
+      });
     }
+
+    const { name, rollNumber, section, email, phone } = req.body;
+
+    // Check if another student already has this roll number
+    if (rollNumber) {
+      const existingStudent = await Student.findOne({
+        where: {
+          rollNumber,
+        },
+      });
+
+      if (existingStudent && existingStudent.id !== student.id) {
+        return res.status(409).json({
+          message: "Roll number already exists",
+        });
+      }
+    }
+
+    // Update student
+    await student.update({
+      name,
+      rollNumber,
+      section,
+      email,
+      phone,
+    });
+
+    return res.status(200).json({
+      message: "Student updated successfully",
+      student,
+    });
+
+  } catch (error) {
+    console.error("Update Student Error:", error);
+
+    return res.status(500).json({
+      message: "Internal Server Error",
+    });
   }
-}
+};
 
 
 
