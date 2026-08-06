@@ -69,12 +69,13 @@ const getStudentById=async (req,res)=>{
     return res.status(404).json({
       message:"student does not exists"
     })
-    return res.status(200).json({
+    
+  }
+  return res.status(200).json({
       messgage:"student  exsits ",
       Name:student.name,
       student,
     })
-  }
 }
 catch(err){
   return res.status(500).json({
