@@ -17,7 +17,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/api/auth", authRoutes);
 app.use("/api/students", studentRoutes);
-app.use('/api/attendece',attendenceRoutes);
+app.use('/api/attendence',attendenceRoutes);
 
 sequelize
   .sync()
