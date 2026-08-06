@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const studentRoutes=require('./routes/student.routes');
+const attendenceRoutes = require("./routes/attendence.routes");
 require("dotenv").config();
 
 const sequelize = require("./config/db");
@@ -16,6 +17,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/api/auth", authRoutes);
 app.use("/api/students", studentRoutes);
+app.use('/api/attendece',attendenceRoutes);
 
 sequelize
   .sync()
