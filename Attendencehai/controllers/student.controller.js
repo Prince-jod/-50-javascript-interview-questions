@@ -84,6 +84,25 @@ catch(err){
   })
 }
 }
+
+
+const UpdateStudent=async (req,res)=>{
+  try{
+    const {id}=req.params;
+    
+    const student=await Student.findByPk(id);
+    if(!student){
+      return res.status(404).json({
+        message: "student does not exists",
+      })
+    }
+  }
+}
+
+
+
+
+
 module.exports={
   createStudent,
   getAllStudents,
