@@ -63,3 +63,27 @@ module.exports={
   getAllStudents
 
 }
+
+const getStudentById=async (req,res)=>{
+  try{
+  const {id}=req.params;
+  const student =await Student.findByPk(id);
+
+  if(!student){
+    return res.status(404).json({
+      message:"student does not exists"
+    })
+    return res.status(200).json({
+      messgage:"student  exsits ",
+      Name:student.name,
+      student,
+    })
+  }
+}
+catch(err){
+  return res.status(500).json({
+    message:"internal server error",
+    err
+  })
+}
+}
