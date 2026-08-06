@@ -4,7 +4,7 @@ const path = require("path");
 require("dotenv").config();
 
 const sequelize = require("./config/db");
-require("../models");
+// require("../models");
 const authRoutes = require("./routes/auth.routes");
 
 const app = express();
