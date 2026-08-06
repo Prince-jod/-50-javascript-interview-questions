@@ -1,4 +1,4 @@
-const students=require('../modles/Student');
+const students=require('../models/Student');
 
 
 const createStudent=async (req,res)=>{
