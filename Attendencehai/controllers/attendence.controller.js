@@ -3,6 +3,7 @@ const Student = require("../models/Student");
 const Teacher = require("../models/Teacher");
 
 const markAttendence = async (req, res) => {
+  console.log("piinnagidgadg");
   try {
     const { studentId, teacherId, status } = req.body;
 
