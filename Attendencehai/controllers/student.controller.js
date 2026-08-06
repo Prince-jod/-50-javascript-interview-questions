@@ -146,6 +146,7 @@ const updateStudent = async (req, res) => {
 module.exports={
   createStudent,
   getAllStudents,
-  getStudentById
+  getStudentById,
+  updateStudent,
 
 }
