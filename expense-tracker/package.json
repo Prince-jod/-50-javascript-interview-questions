@@ -1,5 +1,5 @@
 {
-  "name": "attendencehai",
+  "name": "expense-tracker",
   "version": "1.0.0",
   "description": "",
   "license": "ISC",
@@ -14,7 +14,7 @@
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
-    "jsonwebtoken": "^9.0.3",
+    "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.23.2",
     "nodemon": "^3.1.14",
     "sequelize": "^6.37.8"
