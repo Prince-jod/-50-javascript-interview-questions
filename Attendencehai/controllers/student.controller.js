@@ -143,10 +143,45 @@ const updateStudent = async (req, res) => {
 
 
 
+const deleteStudent = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const student = await Student.findByPk(id);
+
+    if (!student) {
+      return res.status(404).json({
+        message: "Student does not exist",
+      });
+    }
+
+    await student.destroy();
+
+    return res.status(200).json({
+      message: "Student deleted successfully",
+    });
+  } catch (error) {
+    console.error("Delete Student Error:", error);
+
+    if (error.name === "SequelizeForeignKeyConstraintError") {
+      return res.status(409).json({
+        message:
+          "Cannot delete this student — they have attendance records linked to them.",
+      });
+    }
+
+    return res.status(500).json({
+      message: "Internal Server Error",
+    });
+  }
+};
+
+
 module.exports={
   createStudent,
   getAllStudents,
   getStudentById,
   updateStudent,
+  deleteStudent,
 
 }
