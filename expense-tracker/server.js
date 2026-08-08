@@ -20,7 +20,7 @@ app.use("/api/expenses", expenseRoutes);
 app.use("/api/payment", paymentRoutes);
 
 sequelize
-  .sync()
+  .sync({alter:true})
   .then(() => {
     console.log("Database connected and models synced.");
   })
