@@ -295,6 +295,34 @@ premiumBtn.addEventListener("click", async () => {
             redirectTarget: "_modal",
         });
 
+        // Verify payment after checkout
+const verifyResponse = await apiFetch(
+    "/api/payment/verify",
+    {
+        method: "POST",
+        body: JSON.stringify({
+            orderId: data.orderId,
+        }),
+    }
+);
+
+if (!verifyResponse) return;
+
+const verifyData = await verifyResponse.json();
+
+if (verifyResponse.ok) {
+    if (verifyData.status === "SUCCESSFUL") {
+        alert("Transaction successful");
+    } else if (verifyData.status === "FAILED") {
+        alert("TRANSACTION FAILED.");
+    }
+} else {
+    alert(
+        verifyData.message ||
+        "Unable to verify payment"
+    );
+}
+
 
     } catch (error) {
 
