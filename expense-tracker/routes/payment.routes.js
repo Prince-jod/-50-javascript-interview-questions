@@ -8,9 +8,6 @@ const {
 } = require("../controllers/payment.controller");
 router.post("/create-order", authMiddleware, createOrder);
 router.post(
-    "/verify",
-    authMiddleware,
-    verifyPayment
-);
+    "/verify",authMiddleware,verifyPayment);
 
 module.exports = router;
