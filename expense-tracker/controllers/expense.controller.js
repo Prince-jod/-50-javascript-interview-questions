@@ -2,7 +2,7 @@ const Expense = require("../models/Expense");
 
 const createExpense = async (req, res) => {
   try {
-    const { title, amount, category, date } = req.body;
+    const { title, amount, category, date,name } = req.body;
     const userId = req.user.id; // comes from the verified token, not the body
 
     if (!title || !amount || !date) {
@@ -17,6 +17,7 @@ const createExpense = async (req, res) => {
       amount,
       category,
       date,
+      name,
     });
 
     return res.status(201).json({

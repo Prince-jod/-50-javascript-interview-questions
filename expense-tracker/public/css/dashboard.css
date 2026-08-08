@@ -19,6 +19,29 @@ body {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
+.premium-message {
+    display: none;
+    width: 100%;
+    box-sizing: border-box;
+
+    margin: 20px 0;
+    padding: 16px 20px;
+
+    text-align: center;
+
+    font-size: 22px;
+    font-weight: 700;
+
+    border-radius: 10px;
+
+    background: #e8f5e9;
+    color: #2e7d32;
+
+    border: 1px solid #a5d6a7;
+
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
 .topbar h1 {
   font-size: 20px;
   color: #333;

@@ -5,7 +5,7 @@ const createOrder = async (req, res) => {
   try {
     const userId = req.user.id;
 
-    const amount = 299;
+    const amount = 12299;
 
     // 1. Create our database order
     const order = await Order.create({

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,157 +12,239 @@
 
 <body>
 
-<header class="topbar">
-    <h1>Expense Tracker</h1>
+    <!-- Topbar -->
+    <header class="topbar">
 
-    <div class="topbar-right">
+        <h1>Expense Tracker</h1>
 
-        <span id="userName"></span>
+        <div class="topbar-right">
 
-        <!-- Buy Premium Button -->
-        <button id="premiumBtn" class="btn-premium">
-            Buy Premium Membership
-        </button>
+            <span id="userName"></span>
 
-        <!-- Logout -->
-        <button id="logoutBtn" class="btn-outline">
-            Logout
-        </button>
+            <!-- Buy Premium Button -->
+            <button id="premiumBtn" class="btn-premium">
+                Buy Premium Membership
+            </button>
 
-    </div>
-</header>
+            <!-- Logout -->
+            <button id="logoutBtn" class="btn-outline">
+                Logout
+            </button>
 
-
-<main>
-
-    <!-- Total Spent -->
-    <section class="card summary-card">
-        <div>
-            <p class="summary-label">Total Spent</p>
-            <p class="summary-value" id="totalAmount">₹0.00</p>
         </div>
-    </section>
+
+    </header>
 
 
-    <!-- Add / Edit Expense -->
-    <section class="card">
+    <main>
 
-        <h2 id="expenseFormTitle">Add Expense</h2>
+        <!-- Premium User Message -->
+        <div
+            id="premiumMessage"
+            class="premium-message"
+            style="display: none;"
+        >
+            🎉 You are a premium user now
+        </div>
 
-        <form id="expenseForm" class="inline-form">
 
-            <input
-                type="hidden"
-                id="e-id"
-            >
+        <!-- Total Spent -->
+        <section class="card summary-card">
 
-            <input
-                type="text"
-                id="e-title"
-                placeholder="Title"
-                required
-            >
+            <div>
 
-            <input
-                type="number"
-                id="e-amount"
-                placeholder="Amount"
-                min="0"
-                step="0.01"
-                required
-            >
+                <p class="summary-label">
+                    Total Spent
+                </p>
 
-            <select
-                id="e-category"
-                required
-            >
-                <option value="Food">Food</option>
-                <option value="Travel">Travel</option>
-                <option value="Shopping">Shopping</option>
-                <option value="Bills">Bills</option>
-                <option value="Health">Health</option>
-                <option value="Entertainment">Entertainment</option>
-                <option value="Other">Other</option>
-            </select>
+                <p
+                    class="summary-value"
+                    id="totalAmount"
+                >
+                    ₹0.00
+                </p>
 
-            <input
-                type="date"
-                id="e-date"
-                required
-            >
+            </div>
 
-            <button
-                type="submit"
-                id="expenseSubmitBtn"
-            >
+        </section>
+
+
+        <!-- Add / Edit Expense -->
+        <section class="card">
+
+            <h2 id="expenseFormTitle">
                 Add Expense
-            </button>
+            </h2>
 
-            <button
-                type="button"
-                id="expenseCancelBtn"
-                class="btn-outline"
-                style="display:none;"
+
+            <form
+                id="expenseForm"
+                class="inline-form"
             >
-                Cancel
-            </button>
 
-        </form>
-
-    </section>
-
-
-    <!-- Expenses -->
-    <section class="card">
-
-        <h2>Expenses</h2>
-
-        <div class="table-wrap">
-
-            <table id="expensesTable">
-
-                <thead>
-
-                    <tr>
-                        <th>Date</th>
-                        <th>Title</th>
-                        <th>Category</th>
-                        <th>Amount</th>
-                        <th>Actions</th>
-                    </tr>
-
-                </thead>
-
-                <tbody></tbody>
-
-            </table>
-
-            <p
-                id="expensesEmpty"
-                class="empty-msg"
-                style="display:none;"
-            >
-                No expenses added yet.
-            </p>
-
-        </div>
-
-    </section>
-
-</main>
+                <input
+                    type="hidden"
+                    id="e-id"
+                >
 
 
-<!--
-    Cashfree JavaScript SDK
+                <!-- Name -->
+                <input
+                    type="text"
+                    id="e-name"
+                    placeholder="Name"
+                    required
+                >
 
-    IMPORTANT:
-    Cashfree must be loaded BEFORE dashboard.js
--->
-<script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
+
+                <!-- Title -->
+                <input
+                    type="text"
+                    id="e-title"
+                    placeholder="Title"
+                    required
+                >
 
 
-<!-- Your existing dashboard JavaScript -->
-<script src="./js/dashboard.js"></script>
+                <!-- Amount -->
+                <input
+                    type="number"
+                    id="e-amount"
+                    placeholder="Amount"
+                    min="0"
+                    step="0.01"
+                    required
+                >
+
+
+                <!-- Category -->
+                <select
+                    id="e-category"
+                    required
+                >
+
+                    <option value="Food">
+                        Food
+                    </option>
+
+                    <option value="Travel">
+                        Travel
+                    </option>
+
+                    <option value="Shopping">
+                        Shopping
+                    </option>
+
+                    <option value="Bills">
+                        Bills
+                    </option>
+
+                    <option value="Health">
+                        Health
+                    </option>
+
+                    <option value="Entertainment">
+                        Entertainment
+                    </option>
+
+                    <option value="Other">
+                        Other
+                    </option>
+
+                </select>
+
+
+                <!-- Date -->
+                <input
+                    type="date"
+                    id="e-date"
+                    required
+                >
+
+
+                <!-- Add / Update -->
+                <button
+                    type="submit"
+                    id="expenseSubmitBtn"
+                >
+                    Add Expense
+                </button>
+
+
+                <!-- Cancel -->
+                <button
+                    type="button"
+                    id="expenseCancelBtn"
+                    class="btn-outline"
+                    style="display: none;"
+                >
+                    Cancel
+                </button>
+
+            </form>
+
+        </section>
+
+
+        <!-- Expenses -->
+        <section class="card">
+
+            <h2>
+                Expenses
+            </h2>
+
+
+            <div class="table-wrap">
+
+                <table id="expensesTable">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Name</th>
+
+                            <th>Date</th>
+
+                            <th>Title</th>
+
+                            <th>Category</th>
+
+                            <th>Amount</th>
+
+                            <th>Actions</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody></tbody>
+
+                </table>
+
+
+                <p
+                    id="expensesEmpty"
+                    class="empty-msg"
+                    style="display: none;"
+                >
+                    No expenses added yet.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- Cashfree SDK -->
+    <script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
+
+    <!-- Dashboard JavaScript -->
+    <script src="./js/dashboard.js"></script>
 
 </body>
+
 </html>

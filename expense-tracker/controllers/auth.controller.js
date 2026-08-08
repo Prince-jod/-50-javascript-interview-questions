@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const register = async (req, res) => {
   try {
     // Get data from request body
-    const { name, email, password } = req.body;
+    const { name, email, password, } = req.body;
 
     // Validate input
     if (!name || !email || !password) {
@@ -86,20 +86,26 @@ const login = async (req, res) => {
     }
 
     const token = jwt.sign(
-      { id: user.id, name: user.name, email: user.email },
-      process.env.JWT_SECRET,
-      { expiresIn: "1d" }
-    );
+  {
+    id: user.id,
+    name: user.name,
+    email: user.email,
+    isPrime: user.isPrime
+  },
+  process.env.JWT_SECRET,
+  { expiresIn: "1d" }
+);
 
-    return res.status(200).json({
-      message: "login successfully",
-      token,
-      user: {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-      },
-    });
+   return res.status(200).json({
+  message: "login successfully",
+  token,
+  user: {
+    id: user.id,
+    name: user.name,
+    email: user.email,
+    isPrime: user.isPrime,
+  },
+});
 
 
   }
