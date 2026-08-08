@@ -1,77 +1,167 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Expense Dashboard</title>
+
+    <title>Expense Tracker Dashboard</title>
 
     <link rel="stylesheet" href="./css/dashboard.css">
 </head>
 
 <body>
 
-    <header class="topbar">
-        <h1>Expense Tracker</h1>
-        <div class="topbar-right">
-            <span id="userName"></span>
-            <button id="logoutBtn" class="btn-outline">Logout</button>
+<header class="topbar">
+    <h1>Expense Tracker</h1>
+
+    <div class="topbar-right">
+
+        <span id="userName"></span>
+
+        <!-- Buy Premium Button -->
+        <button id="premiumBtn" class="btn-premium">
+            Buy Premium Membership
+        </button>
+
+        <!-- Logout -->
+        <button id="logoutBtn" class="btn-outline">
+            Logout
+        </button>
+
+    </div>
+</header>
+
+
+<main>
+
+    <!-- Total Spent -->
+    <section class="card summary-card">
+        <div>
+            <p class="summary-label">Total Spent</p>
+            <p class="summary-value" id="totalAmount">₹0.00</p>
         </div>
-    </header>
+    </section>
 
-    <main>
 
-        <section class="card summary-card">
-            <div>
-                <p class="summary-label">Total Spent</p>
-                <p class="summary-value" id="totalAmount">₹0.00</p>
-            </div>
-        </section>
+    <!-- Add / Edit Expense -->
+    <section class="card">
 
-        <section class="card">
-            <h2 id="expenseFormTitle">Add Expense</h2>
-            <form id="expenseForm" class="inline-form">
-                <input type="hidden" id="e-id">
-                <input type="text" id="e-title" placeholder="Title" required>
-                <input type="number" id="e-amount" placeholder="Amount" min="0" step="0.01" required>
-                <select id="e-category" required>
-                    <option value="Food">Food</option>
-                    <option value="Travel">Travel</option>
-                    <option value="Shopping">Shopping</option>
-                    <option value="Bills">Bills</option>
-                    <option value="Health">Health</option>
-                    <option value="Entertainment">Entertainment</option>
-                    <option value="Other">Other</option>
-                </select>
-                <input type="date" id="e-date" required>
-                <button type="submit" id="expenseSubmitBtn">Add Expense</button>
-                <button type="button" id="expenseCancelBtn" class="btn-outline" style="display:none;">Cancel</button>
-            </form>
-        </section>
+        <h2 id="expenseFormTitle">Add Expense</h2>
 
-        <section class="card">
-            <h2>Expenses</h2>
-            <div class="table-wrap">
-                <table id="expensesTable">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Title</th>
-                            <th>Category</th>
-                            <th>Amount</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-                <p id="expensesEmpty" class="empty-msg" style="display:none;">No expenses added yet.</p>
-            </div>
-        </section>
+        <form id="expenseForm" class="inline-form">
 
-    </main>
+            <input
+                type="hidden"
+                id="e-id"
+            >
 
-    <script src="./js/dashboard.js"></script>
+            <input
+                type="text"
+                id="e-title"
+                placeholder="Title"
+                required
+            >
+
+            <input
+                type="number"
+                id="e-amount"
+                placeholder="Amount"
+                min="0"
+                step="0.01"
+                required
+            >
+
+            <select
+                id="e-category"
+                required
+            >
+                <option value="Food">Food</option>
+                <option value="Travel">Travel</option>
+                <option value="Shopping">Shopping</option>
+                <option value="Bills">Bills</option>
+                <option value="Health">Health</option>
+                <option value="Entertainment">Entertainment</option>
+                <option value="Other">Other</option>
+            </select>
+
+            <input
+                type="date"
+                id="e-date"
+                required
+            >
+
+            <button
+                type="submit"
+                id="expenseSubmitBtn"
+            >
+                Add Expense
+            </button>
+
+            <button
+                type="button"
+                id="expenseCancelBtn"
+                class="btn-outline"
+                style="display:none;"
+            >
+                Cancel
+            </button>
+
+        </form>
+
+    </section>
+
+
+    <!-- Expenses -->
+    <section class="card">
+
+        <h2>Expenses</h2>
+
+        <div class="table-wrap">
+
+            <table id="expensesTable">
+
+                <thead>
+
+                    <tr>
+                        <th>Date</th>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Amount</th>
+                        <th>Actions</th>
+                    </tr>
+
+                </thead>
+
+                <tbody></tbody>
+
+            </table>
+
+            <p
+                id="expensesEmpty"
+                class="empty-msg"
+                style="display:none;"
+            >
+                No expenses added yet.
+            </p>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!--
+    Cashfree JavaScript SDK
+
+    IMPORTANT:
+    Cashfree must be loaded BEFORE dashboard.js
+-->
+<script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
+
+
+<!-- Your existing dashboard JavaScript -->
+<script src="./js/dashboard.js"></script>
 
 </body>
-
 </html>
