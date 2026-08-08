@@ -32,6 +32,10 @@ const User = sequelize.define("User", {
       notEmpty: true,
     },
   },
+  isPrime:{
+    type:DataTypes.BOOLEAN,
+    defaultValue:false
+  },
 
 },
   {
