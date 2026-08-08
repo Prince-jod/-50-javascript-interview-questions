@@ -24,6 +24,11 @@ const Order = sequelize.define("Order", {
     defaultValue: "PENDING",
     allowNull: false,
   },
+
+    userId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
 });
 
 module.exports = Order;
