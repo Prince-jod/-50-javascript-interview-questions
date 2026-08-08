@@ -17,6 +17,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/api/auth", authRoutes);
 app.use("/api/expenses", expenseRoutes);
+app.use("/api/payment", paymentRoutes);
 
 sequelize
   .sync()
