@@ -20,4 +20,5 @@ Order.belongsTo(User, {
 module.exports = {
   User,
   Expense,
+  Order,
 };
