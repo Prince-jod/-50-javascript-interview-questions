@@ -1,15 +1,19 @@
 const searchBtn = document.getElementById("searchBtn");
 const markAttendanceBtn = document.getElementById("markAttendanceBtn");
+const fetchReportBtn = document.getElementById("fetchReportBtn");
 
 const attendanceDate = document.getElementById("attendanceDate");
 const studentList = document.getElementById("studentList");
+const reportList = document.getElementById("reportList");
 const message = document.getElementById("message");
-
 
 let students = [];
 
 
-// SEARCH
+// =========================
+// SEARCH ATTENDANCE
+// =========================
+
 searchBtn.addEventListener("click", async () => {
 
   const date = attendanceDate.value;
@@ -43,11 +47,16 @@ searchBtn.addEventListener("click", async () => {
     console.error(error);
 
     message.textContent = "Something went wrong";
+
   }
+
 });
 
 
+// =========================
 // DISPLAY STUDENTS
+// =========================
+
 function displayStudents(students) {
 
   studentList.innerHTML = "";
@@ -81,11 +90,16 @@ function displayStudents(students) {
     `;
 
     studentList.appendChild(row);
+
   });
+
 }
 
 
+// =========================
 // MARK ATTENDANCE
+// =========================
+
 markAttendanceBtn.addEventListener("click", async () => {
 
   const date = attendanceDate.value;
@@ -104,6 +118,7 @@ markAttendanceBtn.addEventListener("click", async () => {
     );
 
     if (!selected) {
+
       message.textContent =
         `Please mark attendance for ${student.name}`;
 
@@ -114,6 +129,7 @@ markAttendanceBtn.addEventListener("click", async () => {
       studentId: student.id,
       status: selected.value
     });
+
   }
 
   try {
@@ -136,7 +152,9 @@ markAttendanceBtn.addEventListener("click", async () => {
     const data = await response.json();
 
     if (!response.ok) {
+
       message.textContent = data.message;
+
       return;
     }
 
@@ -149,6 +167,75 @@ markAttendanceBtn.addEventListener("click", async () => {
 
     message.textContent =
       "Something went wrong";
+
   }
 
 });
+
+
+// =========================
+// FETCH ATTENDANCE REPORT
+// =========================
+
+fetchReportBtn.addEventListener("click", async () => {
+
+  try {
+
+    const response = await fetch(
+      "/api/attendance/report"
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+
+      message.textContent = data.message;
+
+      return;
+    }
+
+    displayReport(data);
+
+    message.textContent = "";
+
+  } catch (error) {
+
+    console.error(error);
+
+    message.textContent =
+      "Failed to fetch attendance report";
+
+  }
+
+});
+
+
+// =========================
+// DISPLAY ATTENDANCE REPORT
+// =========================
+
+function displayReport(report) {
+
+  reportList.innerHTML = "";
+
+  report.forEach((student) => {
+
+    const row = document.createElement("tr");
+
+    row.innerHTML = `
+      <td>${student.rollNumber}</td>
+
+      <td>${student.name}</td>
+
+      <td>${student.present}</td>
+
+      <td>${student.total}</td>
+
+      <td>${student.percentage}%</td>
+    `;
+
+    reportList.appendChild(row);
+
+  });
+
+}
