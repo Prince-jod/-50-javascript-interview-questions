@@ -136,4 +136,5 @@ const getAttendanceReport = async (req, res) => {
 module.exports = {
   getStudentsForAttendance,
   markAttendance,
+  getAttendanceReport,
 };
