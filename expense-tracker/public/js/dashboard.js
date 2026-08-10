@@ -3,184 +3,192 @@ const user = JSON.parse(localStorage.getItem("user") || "null");
 
 const premiumMessage = document.getElementById("premiumMessage");
 const leaderboardBtn = document.getElementById("leaderboardBtn");
-
+const leaderboardSection = document.getElementById("leaderboardSection");
+const leaderboardTable = document.getElementById("leaderboardTable");
 leaderboardBtn.addEventListener("click", async () => {
+    try {
+        const response = await apiFetch("/api/leaderboard"); if (!response) return; const data = await response.json(); if (!response.ok) { alert(data.message || "Unable to fetch leaderboard"); return; } 
+        // Show leaderboard section
+         leaderboardSection.style.display = "block";
+          // Get table body 
+          const tbody = leaderboardTable.querySelector("tbody"); 
+          // Clear previous data 
+          tbody.innerHTML = "";
+           // Add leaderboard data
+            data.leaderboard.forEach((item, index) => { const row = document.createElement("tr"); 
+                // Rank 
+                const rankCell = document.createElement("td"); rankCell.textContent = index + 1; 
+                // User name
+                 const nameCell = document.createElement("td"); nameCell.textContent = item.User.name; 
+                 // Total expense
+                  const amountCell = document.createElement("td"); amountCell.textContent = `₹${Number(item.totalExpense).toFixed(2)}`; row.appendChild(rankCell); row.appendChild(nameCell); row.appendChild(amountCell); tbody.appendChild(row); }); } catch (error) { console.error("Leaderboard Error:", error); alert("Something went wrong while loading leaderboard"); } });
 
-    const response = await apiFetch("/api/leaderboard");
+        // Guard: bounce back to login if there's no session
+        if (!token || !user) {
+            window.location.href = "/login";
+        }
 
-    if (!response) return;
+        document.getElementById("userName").textContent = user ? user.name : "";
 
-    const data = await response.json();
+        const authHeaders = {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+        };
 
-    console.log(data);
-});
 
-// Guard: bounce back to login if there's no session
-if (!token || !user) {
-    window.location.href = "/login";
-}
+        // =====================================================
+        // API FETCH WRAPPER
+        // =====================================================
 
-document.getElementById("userName").textContent = user ? user.name : "";
+        async function apiFetch(url, options = {}) {
 
-const authHeaders = {
-    "Content-Type": "application/json",
-    "Authorization": `Bearer ${token}`,
-};
+            const response = await fetch(url, {
+                ...options,
 
+                headers: {
+                    ...authHeaders,
+                    ...(options.headers || {}),
+                },
+            });
 
-// =====================================================
-// API FETCH WRAPPER
-// =====================================================
+            // If JWT is invalid/expired
+            if (response.status === 401) {
 
-async function apiFetch(url, options = {}) {
+                localStorage.removeItem("token");
+                localStorage.removeItem("user");
 
-    const response = await fetch(url, {
-        ...options,
+                window.location.href = "/login";
 
-        headers: {
-            ...authHeaders,
-            ...(options.headers || {}),
-        },
-    });
+                return null;
+            }
 
-    // If JWT is invalid/expired
-    if (response.status === 401) {
+            return response;
+        }
 
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
 
-        window.location.href = "/login";
+        // =====================================================
+        // PREMIUM STATUS
+        // =====================================================
 
-        return null;
-    }
+        function checkPremiumStatus() {
 
-    return response;
-}
+            if (user && user.isPrime === true) {
 
+                premiumMessage.style.display = "block";
+                leaderboardBtn.style.display = "inline-block";
 
-// =====================================================
-// PREMIUM STATUS
-// =====================================================
+            } else {
 
-function checkPremiumStatus() {
+                premiumMessage.style.display = "none";
+                leaderboardBtn.style.display = "none";
 
-    if (user && user.isPrime === true) {
+            }
+        }
+        leaderboardBtn.addEventListener("click", async () => {
 
-        premiumMessage.style.display = "block";
-        leaderboardBtn.style.display = "inline-block";
+            const response = await apiFetch("/api/leaderboard");
 
-    } else {
+            if (!response) return;
 
-        premiumMessage.style.display = "none";
-        leaderboardBtn.style.display = "none";
+            const data = await response.json();
 
-    }
-}
-leaderboardBtn.addEventListener("click", async () => {
+            console.log(data);
+        });
 
-    const response = await apiFetch("/api/leaderboard");
 
-    if (!response) return;
+        // =====================================================
+        // ESCAPE HTML
+        // =====================================================
 
-    const data = await response.json();
+        function escapeHtml(str) {
 
-    console.log(data);
-});
+            return String(str)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
 
 
-// =====================================================
-// ESCAPE HTML
-// =====================================================
+        // =====================================================
+        // EXPENSE ELEMENTS
+        // =====================================================
 
-function escapeHtml(str) {
+        const expenseForm =
+            document.getElementById("expenseForm");
 
-    return String(str)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-}
+        const expenseFormTitle =
+            document.getElementById("expenseFormTitle");
 
+        const expenseSubmitBtn =
+            document.getElementById("expenseSubmitBtn");
 
-// =====================================================
-// EXPENSE ELEMENTS
-// =====================================================
+        const expenseCancelBtn =
+            document.getElementById("expenseCancelBtn");
 
-const expenseForm =
-    document.getElementById("expenseForm");
+        const expensesTableBody =
+            document.querySelector("#expensesTable tbody");
 
-const expenseFormTitle =
-    document.getElementById("expenseFormTitle");
+        const expensesEmpty =
+            document.getElementById("expensesEmpty");
 
-const expenseSubmitBtn =
-    document.getElementById("expenseSubmitBtn");
+        const totalAmountEl =
+            document.getElementById("totalAmount");
 
-const expenseCancelBtn =
-    document.getElementById("expenseCancelBtn");
+        let expensesCache = [];
 
-const expensesTableBody =
-    document.querySelector("#expensesTable tbody");
 
-const expensesEmpty =
-    document.getElementById("expensesEmpty");
+        // =====================================================
+        // LOAD EXPENSES
+        // =====================================================
 
-const totalAmountEl =
-    document.getElementById("totalAmount");
+        async function loadExpenses() {
 
-let expensesCache = [];
+            const response =
+                await apiFetch("/api/expenses");
 
+            if (!response) return;
 
-// =====================================================
-// LOAD EXPENSES
-// =====================================================
+            const data =
+                await response.json();
 
-async function loadExpenses() {
+            expensesCache =
+                response.ok
+                    ? (data.expenses || [])
+                    : [];
 
-    const response =
-        await apiFetch("/api/expenses");
+            renderExpensesTable();
 
-    if (!response) return;
+            renderTotal();
+        }
 
-    const data =
-        await response.json();
 
-    expensesCache =
-        response.ok
-            ? (data.expenses || [])
-            : [];
+        // =====================================================
+        // RENDER EXPENSE TABLE
+        // =====================================================
 
-    renderExpensesTable();
+        function renderExpensesTable() {
 
-    renderTotal();
-}
+            expensesTableBody.innerHTML = "";
 
+            if (expensesCache.length === 0) {
 
-// =====================================================
-// RENDER EXPENSE TABLE
-// =====================================================
+                expensesEmpty.style.display = "block";
 
-function renderExpensesTable() {
+                return;
+            }
 
-    expensesTableBody.innerHTML = "";
+            expensesEmpty.style.display = "none";
 
-    if (expensesCache.length === 0) {
 
-        expensesEmpty.style.display = "block";
+            expensesCache.forEach((expense) => {
 
-        return;
-    }
+                const row =
+                    document.createElement("tr");
 
-    expensesEmpty.style.display = "none";
 
-
-    expensesCache.forEach((expense) => {
-
-        const row =
-            document.createElement("tr");
-
-
-        row.innerHTML = `
+                row.innerHTML = `
 
             <td>
                 ${escapeHtml(expense.name)}
@@ -222,314 +230,260 @@ function renderExpensesTable() {
         `;
 
 
-        expensesTableBody.appendChild(row);
-    });
+                expensesTableBody.appendChild(row);
+            });
 
 
-    // Edit buttons
+            // Edit buttons
 
-    expensesTableBody
-        .querySelectorAll(".edit-btn")
-        .forEach((btn) => {
+            expensesTableBody
+                .querySelectorAll(".edit-btn")
+                .forEach((btn) => {
 
-            btn.addEventListener(
-                "click",
-                () => {
-                    startEditExpense(
-                        btn.dataset.id
+                    btn.addEventListener(
+                        "click",
+                        () => {
+                            startEditExpense(
+                                btn.dataset.id
+                            );
+                        }
                     );
-                }
-            );
 
-        });
+                });
 
 
-    // Delete buttons
+            // Delete buttons
 
-    expensesTableBody
-        .querySelectorAll(".delete-btn")
-        .forEach((btn) => {
+            expensesTableBody
+                .querySelectorAll(".delete-btn")
+                .forEach((btn) => {
 
-            btn.addEventListener(
-                "click",
-                () => {
-                    deleteExpense(
-                        btn.dataset.id
+                    btn.addEventListener(
+                        "click",
+                        () => {
+                            deleteExpense(
+                                btn.dataset.id
+                            );
+                        }
                     );
-                }
-            );
 
-        });
-}
-
-
-// =====================================================
-// TOTAL EXPENSE
-// =====================================================
-
-function renderTotal() {
-
-    const total =
-        expensesCache.reduce(
-            (sum, expense) =>
-                sum + Number(expense.amount),
-            0
-        );
-
-
-    totalAmountEl.textContent =
-        `₹${total.toFixed(2)}`;
-}
-
-
-// =====================================================
-// START EDIT EXPENSE
-// =====================================================
-
-function startEditExpense(id) {
-
-    const expense =
-        expensesCache.find(
-            (e) =>
-                String(e.id) === String(id)
-        );
-
-
-    if (!expense) return;
-
-
-    document.getElementById("e-id").value =
-        expense.id;
-
-    document.getElementById("e-name").value =
-        expense.name;
-
-    document.getElementById("e-title").value =
-        expense.title;
-
-    document.getElementById("e-amount").value =
-        expense.amount;
-
-    document.getElementById("e-category").value =
-        expense.category;
-
-    document.getElementById("e-date").value =
-        expense.date;
-
-
-    expenseFormTitle.textContent =
-        "Edit Expense";
-
-    expenseSubmitBtn.textContent =
-        "Update Expense";
-
-    expenseCancelBtn.style.display =
-        "inline-block";
-
-
-    expenseForm.scrollIntoView({
-        behavior: "smooth",
-        block: "center",
-    });
-}
-
-
-// =====================================================
-// RESET EXPENSE FORM
-// =====================================================
-
-function resetExpenseForm() {
-
-    expenseForm.reset();
-
-    document.getElementById("e-id").value = "";
-
-    expenseFormTitle.textContent =
-        "Add Expense";
-
-    expenseSubmitBtn.textContent =
-        "Add Expense";
-
-    expenseCancelBtn.style.display =
-        "none";
-}
-
-
-// =====================================================
-// CANCEL EDIT
-// =====================================================
-
-expenseCancelBtn.addEventListener(
-    "click",
-    resetExpenseForm
-);
-
-
-// =====================================================
-// ADD / UPDATE EXPENSE
-// =====================================================
-
-expenseForm.addEventListener(
-    "submit",
-    async (e) => {
-
-        e.preventDefault();
-
-
-        const id =
-            document.getElementById("e-id").value;
-
-
-        const payload = {
-
-            name:
-                document
-                    .getElementById("e-name")
-                    .value
-                    .trim(),
-
-            title:
-                document
-                    .getElementById("e-title")
-                    .value
-                    .trim(),
-
-            amount:
-                document
-                    .getElementById("e-amount")
-                    .value,
-
-            category:
-                document
-                    .getElementById("e-category")
-                    .value,
-
-            date:
-                document
-                    .getElementById("e-date")
-                    .value,
-        };
-
-
-        const url = id
-            ? `/api/expenses/${id}`
-            : "/api/expenses";
-
-
-        const method = id
-            ? "PUT"
-            : "POST";
-
-
-        const response =
-            await apiFetch(
-                url,
-                {
-                    method,
-                    body: JSON.stringify(payload),
-                }
-            );
-
-
-        if (!response) return;
-
-
-        const data =
-            await response.json();
-
-
-        if (response.ok) {
-
-            resetExpenseForm();
-
-            await loadExpenses();
-
-        } else {
-
-            alert(
-                data.message ||
-                "Unable to save expense"
-            );
+                });
         }
 
-    }
-);
+
+        // =====================================================
+        // TOTAL EXPENSE
+        // =====================================================
+
+        function renderTotal() {
+
+            const total =
+                expensesCache.reduce(
+                    (sum, expense) =>
+                        sum + Number(expense.amount),
+                    0
+                );
 
 
-// =====================================================
-// DELETE EXPENSE
-// =====================================================
-
-async function deleteExpense(id) {
-
-    if (
-        !confirm(
-            "Delete this expense?"
-        )
-    ) {
-        return;
-    }
+            totalAmountEl.textContent =
+                `₹${total.toFixed(2)}`;
+        }
 
 
-    const response =
-        await apiFetch(
-            `/api/expenses/${id}`,
-            {
-                method: "DELETE",
+        // =====================================================
+        // START EDIT EXPENSE
+        // =====================================================
+
+        function startEditExpense(id) {
+
+            const expense =
+                expensesCache.find(
+                    (e) =>
+                        String(e.id) === String(id)
+                );
+
+
+            if (!expense) return;
+
+
+            document.getElementById("e-id").value =
+                expense.id;
+
+            document.getElementById("e-name").value =
+                expense.name;
+
+            document.getElementById("e-title").value =
+                expense.title;
+
+            document.getElementById("e-amount").value =
+                expense.amount;
+
+            document.getElementById("e-category").value =
+                expense.category;
+
+            document.getElementById("e-date").value =
+                expense.date;
+
+
+            expenseFormTitle.textContent =
+                "Edit Expense";
+
+            expenseSubmitBtn.textContent =
+                "Update Expense";
+
+            expenseCancelBtn.style.display =
+                "inline-block";
+
+
+            expenseForm.scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+            });
+        }
+
+
+        // =====================================================
+        // RESET EXPENSE FORM
+        // =====================================================
+
+        function resetExpenseForm() {
+
+            expenseForm.reset();
+
+            document.getElementById("e-id").value = "";
+
+            expenseFormTitle.textContent =
+                "Add Expense";
+
+            expenseSubmitBtn.textContent =
+                "Add Expense";
+
+            expenseCancelBtn.style.display =
+                "none";
+        }
+
+
+        // =====================================================
+        // CANCEL EDIT
+        // =====================================================
+
+        expenseCancelBtn.addEventListener(
+            "click",
+            resetExpenseForm
+        );
+
+
+        // =====================================================
+        // ADD / UPDATE EXPENSE
+        // =====================================================
+
+        expenseForm.addEventListener(
+            "submit",
+            async (e) => {
+
+                e.preventDefault();
+
+
+                const id =
+                    document.getElementById("e-id").value;
+
+
+                const payload = {
+
+                    name:
+                        document
+                            .getElementById("e-name")
+                            .value
+                            .trim(),
+
+                    title:
+                        document
+                            .getElementById("e-title")
+                            .value
+                            .trim(),
+
+                    amount:
+                        document
+                            .getElementById("e-amount")
+                            .value,
+
+                    category:
+                        document
+                            .getElementById("e-category")
+                            .value,
+
+                    date:
+                        document
+                            .getElementById("e-date")
+                            .value,
+                };
+
+
+                const url = id
+                    ? `/api/expenses/${id}`
+                    : "/api/expenses";
+
+
+                const method = id
+                    ? "PUT"
+                    : "POST";
+
+
+                const response =
+                    await apiFetch(
+                        url,
+                        {
+                            method,
+                            body: JSON.stringify(payload),
+                        }
+                    );
+
+
+                if (!response) return;
+
+
+                const data =
+                    await response.json();
+
+
+                if (response.ok) {
+
+                    resetExpenseForm();
+
+                    await loadExpenses();
+
+                } else {
+
+                    alert(
+                        data.message ||
+                        "Unable to save expense"
+                    );
+                }
+
             }
         );
 
 
-    if (!response) return;
+        // =====================================================
+        // DELETE EXPENSE
+        // =====================================================
 
+        async function deleteExpense(id) {
 
-    const data =
-        await response.json();
+            if (
+                !confirm(
+                    "Delete this expense?"
+                )
+            ) {
+                return;
+            }
 
-
-    if (response.ok) {
-
-        await loadExpenses();
-
-    } else {
-
-        alert(
-            data.message ||
-            "Unable to delete expense"
-        );
-    }
-}
-
-
-// =====================================================
-// CASHFREE PREMIUM PAYMENT
-// =====================================================
-
-const premiumBtn =
-    document.getElementById("premiumBtn");
-
-
-premiumBtn.addEventListener(
-    "click",
-    async () => {
-
-        try {
-
-            premiumBtn.disabled = true;
-
-            premiumBtn.textContent =
-                "Processing...";
-
-
-            // -----------------------------------------
-            // 1. Create PENDING order
-            // -----------------------------------------
 
             const response =
                 await apiFetch(
-                    "/api/payment/create-order",
+                    `/api/expenses/${id}`,
                     {
-                        method: "POST",
+                        method: "DELETE",
                     }
                 );
 
@@ -541,178 +495,232 @@ premiumBtn.addEventListener(
                 await response.json();
 
 
-            if (!response.ok) {
+            if (response.ok) {
 
-                alert(
-                    data.message ||
-                    "Unable to create payment order"
-                );
-
-                return;
-            }
-
-
-            console.log(
-                "Payment Session ID:",
-                data.paymentSessionId
-            );
-
-
-            // -----------------------------------------
-            // 2. Initialize Cashfree
-            // -----------------------------------------
-
-            const cashfree =
-                Cashfree({
-                    mode: "sandbox",
-                });
-
-
-            // -----------------------------------------
-            // 3. Open Cashfree Checkout
-            // -----------------------------------------
-
-            await cashfree.checkout({
-
-                paymentSessionId:
-                    data.paymentSessionId,
-
-                redirectTarget:
-                    "_modal",
-
-            });
-
-
-            // -----------------------------------------
-            // 4. Verify payment
-            // -----------------------------------------
-
-            const verifyResponse =
-                await apiFetch(
-                    "/api/payment/verify",
-                    {
-                        method: "POST",
-
-                        body: JSON.stringify({
-                            orderId:
-                                data.orderId,
-                        }),
-                    }
-                );
-
-
-            if (!verifyResponse) return;
-
-
-            const verifyData =
-                await verifyResponse.json();
-
-
-            // -----------------------------------------
-            // 5. Payment successful
-            // -----------------------------------------
-
-            if (verifyResponse.ok) {
-
-                if (
-                    verifyData.status ===
-                    "SUCCESSFUL"
-                ) {
-
-                    alert(
-                        "Transaction successful"
-                    );
-
-
-                    // Mark current user as premium
-                    user.isPrime = true;
-
-
-                    // Save updated user
-                    localStorage.setItem(
-                        "user",
-                        JSON.stringify(user)
-                    );
-
-
-                    // Show premium message
-                    checkPremiumStatus();
-
-
-                } else if (
-                    verifyData.status ===
-                    "FAILED"
-                ) {
-
-                    alert(
-                        "TRANSACTION FAILED."
-                    );
-
-                }
+                await loadExpenses();
 
             } else {
 
                 alert(
-                    verifyData.message ||
-                    "Unable to verify payment"
+                    data.message ||
+                    "Unable to delete expense"
                 );
             }
-
-
-        } catch (error) {
-
-            console.error(
-                "Payment error:",
-                error
-            );
-
-
-            alert(
-                "Something went wrong while starting payment."
-            );
-
-
-        } finally {
-
-            premiumBtn.disabled = false;
-
-            premiumBtn.textContent =
-                "Buy Premium Membership";
         }
 
-    }
-);
+
+        // =====================================================
+        // CASHFREE PREMIUM PAYMENT
+        // =====================================================
+
+        const premiumBtn =
+            document.getElementById("premiumBtn");
 
 
-// =====================================================
-// LOGOUT
-// =====================================================
+        premiumBtn.addEventListener(
+            "click",
+            async () => {
 
-document
-    .getElementById("logoutBtn")
-    .addEventListener(
-        "click",
-        () => {
+                try {
 
-            localStorage.removeItem(
-                "token"
+                    premiumBtn.disabled = true;
+
+                    premiumBtn.textContent =
+                        "Processing...";
+
+
+                    // -----------------------------------------
+                    // 1. Create PENDING order
+                    // -----------------------------------------
+
+                    const response =
+                        await apiFetch(
+                            "/api/payment/create-order",
+                            {
+                                method: "POST",
+                            }
+                        );
+
+
+                    if (!response) return;
+
+
+                    const data =
+                        await response.json();
+
+
+                    if (!response.ok) {
+
+                        alert(
+                            data.message ||
+                            "Unable to create payment order"
+                        );
+
+                        return;
+                    }
+
+
+                    console.log(
+                        "Payment Session ID:",
+                        data.paymentSessionId
+                    );
+
+
+                    // -----------------------------------------
+                    // 2. Initialize Cashfree
+                    // -----------------------------------------
+
+                    const cashfree =
+                        Cashfree({
+                            mode: "sandbox",
+                        });
+
+
+                    // -----------------------------------------
+                    // 3. Open Cashfree Checkout
+                    // -----------------------------------------
+
+                    await cashfree.checkout({
+
+                        paymentSessionId:
+                            data.paymentSessionId,
+
+                        redirectTarget:
+                            "_modal",
+
+                    });
+
+
+                    // -----------------------------------------
+                    // 4. Verify payment
+                    // -----------------------------------------
+
+                    const verifyResponse =
+                        await apiFetch(
+                            "/api/payment/verify",
+                            {
+                                method: "POST",
+
+                                body: JSON.stringify({
+                                    orderId:
+                                        data.orderId,
+                                }),
+                            }
+                        );
+
+
+                    if (!verifyResponse) return;
+
+
+                    const verifyData =
+                        await verifyResponse.json();
+
+
+                    // -----------------------------------------
+                    // 5. Payment successful
+                    // -----------------------------------------
+
+                    if (verifyResponse.ok) {
+
+                        if (
+                            verifyData.status ===
+                            "SUCCESSFUL"
+                        ) {
+
+                            alert(
+                                "Transaction successful"
+                            );
+
+
+                            // Mark current user as premium
+                            user.isPrime = true;
+
+
+                            // Save updated user
+                            localStorage.setItem(
+                                "user",
+                                JSON.stringify(user)
+                            );
+
+
+                            // Show premium message
+                            checkPremiumStatus();
+
+
+                        } else if (
+                            verifyData.status ===
+                            "FAILED"
+                        ) {
+
+                            alert(
+                                "TRANSACTION FAILED."
+                            );
+
+                        }
+
+                    } else {
+
+                        alert(
+                            verifyData.message ||
+                            "Unable to verify payment"
+                        );
+                    }
+
+
+                } catch (error) {
+
+                    console.error(
+                        "Payment error:",
+                        error
+                    );
+
+
+                    alert(
+                        "Something went wrong while starting payment."
+                    );
+
+
+                } finally {
+
+                    premiumBtn.disabled = false;
+
+                    premiumBtn.textContent =
+                        "Buy Premium Membership";
+                }
+
+            }
+        );
+
+
+        // =====================================================
+        // LOGOUT
+        // =====================================================
+
+        document
+            .getElementById("logoutBtn")
+            .addEventListener(
+                "click",
+                () => {
+
+                    localStorage.removeItem(
+                        "token"
+                    );
+
+                    localStorage.removeItem(
+                        "user"
+                    );
+
+                    window.location.href =
+                        "/login";
+
+                }
             );
 
-            localStorage.removeItem(
-                "user"
-            );
 
-            window.location.href =
-                "/login";
+        // =====================================================
+        // INITIALIZE DASHBOARD
+        // =====================================================
 
-        }
-    );
+        loadExpenses();
 
-
-// =====================================================
-// INITIALIZE DASHBOARD
-// =====================================================
-
-loadExpenses();
-
-checkPremiumStatus();
+        checkPremiumStatus();
