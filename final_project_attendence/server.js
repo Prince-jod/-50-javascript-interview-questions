@@ -6,7 +6,7 @@ const port =4000;
 
 const sequelize=require('./config/db');
 
-require('/models/Association');
+require('./models/Association');
 
 const app =express();
 app.use(cors());
