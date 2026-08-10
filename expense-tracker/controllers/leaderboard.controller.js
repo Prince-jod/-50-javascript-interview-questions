@@ -1,15 +1,12 @@
 const Expense = require("../models/Expense");
 const User = require("../models/User");
-const sequelize = require("../config/db");
+const { Op } = require("sequelize");
 
 const getLeaderboard = async (req, res) => {
     try {
 
-        // The logged-in user comes from JWT
-        const userId = req.user.id;
-
-        // Check logged-in user
-        const user = await User.findByPk(userId);
+        // Check the logged-in user
+        const user = await User.findByPk(req.user.id);
 
         if (!user) {
             return res.status(404).json({
@@ -24,39 +21,39 @@ const getLeaderboard = async (req, res) => {
             });
         }
 
-        // Get total expenses for every user
+        // Group expenses by the NAME entered in the expense
+        // and add all amounts having the same name
         const leaderboard = await Expense.findAll({
 
             attributes: [
-                "userId",
-
+                "name",
                 [
-                    sequelize.fn(
+                    Expense.sequelize.fn(
                         "SUM",
-                        sequelize.col("amount")
+                        Expense.sequelize.col("amount")
                     ),
                     "totalExpense",
                 ],
             ],
 
-            include: [
+            // Ignore empty/space-only names
+            where: Expense.sequelize.where(
+                Expense.sequelize.fn(
+                    "TRIM",
+                    Expense.sequelize.col("name")
+                ),
                 {
-                    model: User,
-                    attributes: ["id", "name"],
-                },
-            ],
+                    [Op.ne]: "",
+                }
+            ),
 
-            // Group expenses user-wise
-            group: [
-                "Expense.userId",
-                "User.id",
-                "User.name",
-            ],
+            // Same name = same leaderboard entry
+            group: ["name"],
 
-            // Highest total expense first
+            // Highest total first
             order: [
                 [
-                    sequelize.literal("totalExpense"),
+                    Expense.sequelize.literal("totalExpense"),
                     "DESC",
                 ],
             ],
