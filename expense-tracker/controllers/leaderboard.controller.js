@@ -1,14 +1,12 @@
-const User = require("../models/User");
 const Expense = require("../models/Expense");
-const sequelize = require("../config/db");
+const User = require("../models/User");
 
 const getLeaderboard = async (req, res) => {
     try {
 
-        // Get the currently logged-in user's ID
+        // Get the logged-in user
         const userId = req.user.id;
 
-        // Find the user in the database
         const user = await User.findByPk(userId);
 
         // Check if user exists
@@ -25,38 +23,25 @@ const getLeaderboard = async (req, res) => {
             });
         }
 
-        // Get total expenses for every user
+        // Group expenses by Expense.name
+        // and calculate total amount for each name
         const leaderboard = await Expense.findAll({
             attributes: [
-                "userId",
+                "name",
                 [
-                    sequelize.fn(
+                    Expense.sequelize.fn(
                         "SUM",
-                        sequelize.col("amount")
+                        Expense.sequelize.col("amount")
                     ),
                     "totalExpense",
                 ],
             ],
 
-            // Get the user's name
-            include: [
-                {
-                    model: User,
-                    attributes: ["name"],
-                },
-            ],
+            group: ["name"],
 
-            // One group for each user
-            group: [
-                "userId",
-                "User.id",
-                "User.name",
-            ],
-
-            // Highest expense first
             order: [
                 [
-                    sequelize.literal("totalExpense"),
+                    Expense.sequelize.literal("totalExpense"),
                     "DESC",
                 ],
             ],
@@ -68,6 +53,7 @@ const getLeaderboard = async (req, res) => {
         });
 
     } catch (error) {
+
         console.error("Leaderboard Error:", error);
 
         return res.status(500).json({
