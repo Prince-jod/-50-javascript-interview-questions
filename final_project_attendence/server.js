@@ -2,6 +2,7 @@ const express =require('express');
 const cors=require('cors');
 const Student=require('./models/student');
 const seedStudents = require("./seed/student.seed");
+const attendanceRoutes=require('./routes/attendance.route');
 const port =4000;
 
 const sequelize=require('./config/db');
@@ -17,6 +18,7 @@ app.use(express.json());
 app.get('/',(req,res)=>{
   res.sendFile(__dirname + "/view/index.html");
 });
+app.use('/api/attendace',attendanceRoutes);
 
 sequelize.authenticate()
 .then(()=>{
