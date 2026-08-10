@@ -18,7 +18,7 @@ app.use(express.json());
 app.get('/',(req,res)=>{
   res.sendFile(__dirname + "/view/index.html");
 });
-app.use('/api/attendace',attendanceRoutes);
+app.use('/api/attendance',attendanceRoutes);
 
 sequelize.authenticate()
 .then(()=>{
