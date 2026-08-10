@@ -1,5 +1,6 @@
 const Expense = require("../models/Expense");
 const User = require("../models/User");
+const { Op } = require("sequelize");
 
 const getLeaderboard = async (req, res) => {
     try {
@@ -23,9 +24,11 @@ const getLeaderboard = async (req, res) => {
             });
         }
 
-        // Group expenses by Expense.name
-        // and calculate total amount for each name
+        // Get leaderboard
+        // Same Expense.name = same person
+        // All their expenses are added together
         const leaderboard = await Expense.findAll({
+
             attributes: [
                 "name",
                 [
@@ -37,8 +40,21 @@ const getLeaderboard = async (req, res) => {
                 ],
             ],
 
+            // Ignore empty and whitespace-only names
+            where: Expense.sequelize.where(
+                Expense.sequelize.fn(
+                    "TRIM",
+                    Expense.sequelize.col("name")
+                ),
+                {
+                    [Op.ne]: "",
+                }
+            ),
+
+            // Group same names together
             group: ["name"],
 
+            // Highest expense first
             order: [
                 [
                     Expense.sequelize.literal("totalExpense"),
@@ -54,7 +70,10 @@ const getLeaderboard = async (req, res) => {
 
     } catch (error) {
 
-        console.error("Leaderboard Error:", error);
+        console.error(
+            "Leaderboard Error:",
+            error
+        );
 
         return res.status(500).json({
             message: "Internal Server Error",
