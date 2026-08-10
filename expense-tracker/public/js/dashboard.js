@@ -2,38 +2,72 @@ const token = localStorage.getItem("token");
 const user = JSON.parse(localStorage.getItem("user") || "null");
 
 const premiumMessage = document.getElementById("premiumMessage");
-const leaderboardBtn = document.getElementById("leaderboardBtn");
-const leaderboardSection = document.getElementById("leaderboardSection");
-const leaderboardTable = document.getElementById("leaderboardTable");
-leaderboardBtn.addEventListener("click", async () => {
-    try {
-        const response = await apiFetch("/api/leaderboard"); if (!response) return; const data = await response.json(); if (!response.ok) { alert(data.message || "Unable to fetch leaderboard"); return; } 
-        // Show leaderboard section
-         leaderboardSection.style.display = "block";
-          // Get table body 
-          const tbody = leaderboardTable.querySelector("tbody"); 
-          // Clear previous data 
-          tbody.innerHTML = "";
-           // Add leaderboard data
-            data.leaderboard.forEach((item, index) => { const row = document.createElement("tr"); 
-                // Rank 
-                const rankCell = document.createElement("td"); rankCell.textContent = index + 1; 
-                // User name
-                 const nameCell = document.createElement("td"); nameCell.textContent = item.User.name; 
-                 // Total expense
-                  const amountCell = document.createElement("td"); amountCell.textContent = `₹${Number(item.totalExpense).toFixed(2)}`; row.appendChild(rankCell); row.appendChild(nameCell); row.appendChild(amountCell); tbody.appendChild(row); }); } catch (error) { console.error("Leaderboard Error:", error); alert("Something went wrong while loading leaderboard"); } });
+const leaderboardSection =
+    document.getElementById("leaderboardSection");
 
-        // Guard: bounce back to login if there's no session
-        if (!token || !user) {
-            window.location.href = "/login";
+const leaderboardTable =
+    document.getElementById("leaderboardTable");
+
+const leaderboardBtn =
+    document.getElementById("leaderboardBtn");
+
+
+leaderboardBtn.addEventListener("click", async () => {
+
+    try {
+
+        const response = await apiFetch("/api/leaderboard");
+
+        if (!response) return;
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            alert(data.message || "Unable to fetch leaderboard");
+            return;
         }
 
-        document.getElementById("userName").textContent = user ? user.name : "";
+        // Show leaderboard section
+        leaderboardSection.style.display = "block";
 
-        const authHeaders = {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`,
-        };
+        // Get table body
+        const tbody = leaderboardTable.querySelector("tbody");
+
+        // Clear old data
+        tbody.innerHTML = "";
+
+        // Add leaderboard data
+        data.leaderboard.forEach((item, index) => {
+
+            const row = document.createElement("tr");
+
+            // Rank
+            const rankCell = document.createElement("td");
+            rankCell.textContent = index + 1;
+
+            // Expense Name
+            const nameCell = document.createElement("td");
+            nameCell.textContent = item.name;
+
+            // Total Expense
+            const amountCell = document.createElement("td");
+            amountCell.textContent =
+                `₹${Number(item.totalExpense).toFixed(2)}`;
+
+            row.appendChild(rankCell);
+            row.appendChild(nameCell);
+            row.appendChild(amountCell);
+
+            tbody.appendChild(row);
+        });
+
+    } catch (error) {
+
+        console.error("Leaderboard Error:", error);
+
+        alert("Something went wrong while loading leaderboard");
+    }
+});
 
 
         // =====================================================
