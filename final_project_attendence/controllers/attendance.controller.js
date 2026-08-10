@@ -1,5 +1,6 @@
 const Student = require("../models/Student");
 const Attendance = require("../models/Attendance");
+const sequelize = require("../config/db");
 
 const getStudentsForAttendance = async (req, res) => {
   try {
