@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Attendance Taker</title>
+
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+  <div class="container">
+
+    <h1>Attendance Taker</h1>
+
+    <div class="search-box">
+      <input type="date" id="attendanceDate">
+
+      <button id="searchBtn">
+        Search
+      </button>
+    </div>
+
+    <div id="message"></div>
+
+    <table id="attendanceTable">
+
+      <thead>
+        <tr>
+          <th>Roll No</th>
+          <th>Name</th>
+          <th>Present</th>
+          <th>Absent</th>
+        </tr>
+      </thead>
+
+      <tbody id="studentList">
+        <!-- Students will come here -->
+      </tbody>
+
+    </table>
+
+    <button id="markAttendanceBtn">
+      Mark Attendance
+    </button>
+
+  </div>
+
+  <script src="/js/attendance.js"></script>
+
+</body>
+</html>
