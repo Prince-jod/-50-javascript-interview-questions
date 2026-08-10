@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,16 +16,25 @@
 
     <h1>Attendance Taker</h1>
 
+    <!-- Search Attendance By Date -->
     <div class="search-box">
-      <input type="date" id="attendanceDate">
+
+      <input
+        type="date"
+        id="attendanceDate"
+      >
 
       <button id="searchBtn">
         Search
       </button>
+
     </div>
 
+    <!-- Message -->
     <div id="message"></div>
 
+
+    <!-- Student Attendance Table -->
     <table id="attendanceTable">
 
       <thead>
@@ -37,44 +47,55 @@
       </thead>
 
       <tbody id="studentList">
-        <!-- Students will come here -->
+        <!-- Students will be added by JavaScript -->
       </tbody>
 
     </table>
 
+
+    <!-- Mark Attendance -->
     <button id="markAttendanceBtn">
       Mark Attendance
     </button>
+
+
+    <!-- Fetch Attendance Report -->
     <button id="fetchReportBtn">
-  Fetch Attendance
-</button>
+      Fetch Attendance
+    </button>
 
-<div id="reportSection">
 
-  <h2>Attendance Report</h2>
+    <!-- Attendance Report -->
+    <div id="reportSection">
 
-  <table id="reportTable">
+      <h2>Attendance Report</h2>
 
-    <thead>
-      <tr>
-        <th>Roll No</th>
-        <th>Name</th>
-        <th>Present</th>
-        <th>Total</th>
-        <th>Percentage</th>
-      </tr>
-    </thead>
+      <table id="reportTable">
 
-    <tbody id="reportList">
-    </tbody>
+        <thead>
+          <tr>
+            <th>Roll No</th>
+            <th>Name</th>
+            <th>Present</th>
+            <th>Total</th>
+            <th>Percentage</th>
+          </tr>
+        </thead>
 
-  </table>
+        <tbody id="reportList">
+          <!-- Attendance report will be added by JavaScript -->
+        </tbody>
 
-</div>
+      </table>
+
+    </div>
 
   </div>
 
+
+  <!-- JavaScript -->
   <script src="/js/attendance.js"></script>
 
 </body>
+
 </html>
