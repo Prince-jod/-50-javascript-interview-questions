@@ -1,5 +1,6 @@
 const express =require('express');
 const cors=require('cors');
+const Student=require('./models/student');
 
 const port =4000;
 
