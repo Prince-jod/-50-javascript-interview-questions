@@ -2,6 +2,7 @@ const token = localStorage.getItem("token");
 const user = JSON.parse(localStorage.getItem("user") || "null");
 
 const premiumMessage = document.getElementById("premiumMessage");
+const leaderboardBtn = document.getElementById("leaderboardBtn");
 
 // Guard: bounce back to login if there's no session
 if (!token || !user) {
