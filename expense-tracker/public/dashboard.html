@@ -1,13 +1,23 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Expense Tracker Dashboard</title>
 
-    <link rel="stylesheet" href="./css/dashboard.css">
+    <link
+        rel="stylesheet"
+        href="./css/dashboard.css"
+    >
+
 </head>
 
 <body>
@@ -19,28 +29,34 @@
 
         <div class="topbar-right">
 
-    <span id="userName"></span>
+            <span id="userName"></span>
 
-    <!-- Buy Premium Button -->
-    <button id="premiumBtn" class="btn-premium">
-        Buy Premium Membership
-    </button>
+            <!-- Buy Premium Button -->
+            <button
+                id="premiumBtn"
+                class="btn-premium"
+            >
+                Buy Premium Membership
+            </button>
 
-    <!-- Leaderboard -->
-    <button
-        id="leaderboardBtn"
-        class="btn-outline"
-        style="display: none;"
-    >
-        🏆 Leaderboard
-    </button>
+            <!-- Leaderboard -->
+            <button
+                id="leaderboardBtn"
+                class="btn-outline"
+                style="display: none;"
+            >
+                🏆 Leaderboard
+            </button>
 
-    <!-- Logout -->
-    <button id="logoutBtn" class="btn-outline">
-        Logout
-    </button>
+            <!-- Logout -->
+            <button
+                id="logoutBtn"
+                class="btn-outline"
+            >
+                Logout
+            </button>
 
-</div>
+        </div>
 
     </header>
 
@@ -245,6 +261,46 @@
 
         </section>
 
+
+        <!-- Leaderboard -->
+        <section
+            id="leaderboardSection"
+            class="card"
+            style="display: none;"
+        >
+
+            <h2>
+                🏆 Leaderboard
+            </h2>
+
+
+            <div class="table-wrap">
+
+                <table id="leaderboardTable">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Rank</th>
+
+                            <th>User</th>
+
+                            <th>Total Expense</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody></tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
     </main>
 
 
@@ -257,3 +313,4 @@
 </body>
 
 </html>
+```
