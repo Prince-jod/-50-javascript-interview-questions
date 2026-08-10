@@ -76,6 +76,16 @@ function checkPremiumStatus() {
 
     }
 }
+leaderboardBtn.addEventListener("click", async () => {
+
+    const response = await apiFetch("/api/leaderboard");
+
+    if (!response) return;
+
+    const data = await response.json();
+
+    console.log(data);
+});
 
 
 // =====================================================
