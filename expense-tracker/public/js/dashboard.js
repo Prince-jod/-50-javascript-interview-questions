@@ -602,7 +602,7 @@ if (leaderboardBtn) {
                             document.createElement("td");
 
                         nameCell.textContent =
-                            item.name;
+                            item.User.name;
 
 
                         // Total expense
