@@ -45,7 +45,49 @@ const getStudentsForAttendance = async (req, res) => {
     });
   }
 };
+const markAttendance = async (req, res) => {
+  const transaction = await sequelize.transaction();
+
+  try {
+    const { date, attendance } = req.body;
+
+    if (!date || !attendance || !Array.isArray(attendance)) {
+      await transaction.rollback();
+
+      return res.status(400).json({
+        message: "Date and attendance are required"
+      });
+    }
+
+    for (const record of attendance) {
+      await Attendance.create(
+        {
+          studentId: record.studentId,
+          date: date,
+          status: record.status
+        },
+        { transaction }
+      );
+    }
+
+    await transaction.commit();
+
+    res.status(201).json({
+      message: "Attendance marked successfully"
+    });
+
+  } catch (error) {
+    await transaction.rollback();
+
+    console.error(error);
+
+    res.status(500).json({
+      message: "Failed to mark attendance"
+    });
+  }
+};
 
 module.exports = {
-  getStudentsForAttendance
+  getStudentsForAttendance,
+  markAttendance,
 };
