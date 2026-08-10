@@ -3,6 +3,7 @@ const cors = require("cors");
 const path = require("path");
 const expenseRoutes = require("./routes/expense.routes");
 const paymentRoutes = require("./routes/payment.routes");
+const leaderboardRoutes = require("./routes/leaderboard.routes");
 require("dotenv").config();
 
 const sequelize = require("./config/db");
