@@ -3,7 +3,7 @@ const router = express.Router();
 
 const { getLeaderboard } = require("../controllers/leaderboard.controller");
 
-const authMiddleware = require("../middleware/authMiddleware");
+const authMiddleware = require("../middlewares/auth.middleware");
 
 router.get("/", authMiddleware, getLeaderboard);
 
