@@ -61,29 +61,57 @@ const markAttendance = async (req, res) => {
     }
 
     for (const record of attendance) {
-      await Attendance.create(
-        {
+
+      const existingAttendance = await Attendance.findOne({
+        where: {
           studentId: record.studentId,
-          date: date,
-          status: record.status
+          date: date
         },
-        { transaction }
-      );
+        transaction
+      });
+
+      if (existingAttendance) {
+
+        await existingAttendance.update(
+          {
+            status: record.status
+          },
+          {
+            transaction
+          }
+        );
+
+      } else {
+
+        await Attendance.create(
+          {
+            studentId: record.studentId,
+            date: date,
+            status: record.status
+          },
+          {
+            transaction
+          }
+        );
+
+      }
     }
 
     await transaction.commit();
 
-    res.status(201).json({
-      message: "Attendance marked successfully"
+    res.status(200).json({
+      message: "Attendance saved successfully"
     });
 
   } catch (error) {
+
     await transaction.rollback();
 
-    console.error(error);
+    console.error("MARK ATTENDANCE ERROR:", error);
 
     res.status(500).json({
-      message: "Failed to mark attendance"
+      message: "Failed to save attendance",
+      error: error.message
     });
   }
 };
