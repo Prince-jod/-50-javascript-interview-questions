@@ -23,7 +23,7 @@ sequelize.authenticate()
   console.log("My sql connected");
   return sequelize.sync();
 })
-.then(()=>{
+.then(async ()=>{
   console.log("Model synced");
   await seedStudents();
   app.listen(port,()=>{
