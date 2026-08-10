@@ -53,15 +53,15 @@ async function apiFetch(url, options = {}) {
 
 function checkPremiumStatus() {
 
-    if (!premiumMessage) return;
-
     if (user && user.isPrime === true) {
 
         premiumMessage.style.display = "block";
+        leaderboardBtn.style.display = "inline-block";
 
     } else {
 
         premiumMessage.style.display = "none";
+        leaderboardBtn.style.display = "none";
 
     }
 }
