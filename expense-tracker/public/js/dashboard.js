@@ -4,6 +4,17 @@ const user = JSON.parse(localStorage.getItem("user") || "null");
 const premiumMessage = document.getElementById("premiumMessage");
 const leaderboardBtn = document.getElementById("leaderboardBtn");
 
+leaderboardBtn.addEventListener("click", async () => {
+
+    const response = await apiFetch("/api/leaderboard");
+
+    if (!response) return;
+
+    const data = await response.json();
+
+    console.log(data);
+});
+
 // Guard: bounce back to login if there's no session
 if (!token || !user) {
     window.location.href = "/login";
