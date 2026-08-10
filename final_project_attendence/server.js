@@ -1,7 +1,7 @@
 const express =require('express');
 const cors=require('cors');
 const Student=require('./models/student');
-
+const seedStudents = require("./seed/student.seed");
 const port =4000;
 
 const sequelize=require('./config/db');
@@ -25,7 +25,7 @@ sequelize.authenticate()
 })
 .then(()=>{
   console.log("Model synced");
-
+  await seedStudents();
   app.listen(port,()=>{
   console.log("server is running on port--",port);
 })
