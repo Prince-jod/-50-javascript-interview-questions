@@ -87,6 +87,51 @@ const markAttendance = async (req, res) => {
     });
   }
 };
+const getAttendanceReport = async (req, res) => {
+  try {
+    const students = await Student.findAll({
+      order: [["rollNumber", "ASC"]]
+    });
+
+    const attendance = await Attendance.findAll();
+
+    const report = students.map((student) => {
+      const studentAttendance = attendance.filter(
+        (record) => record.studentId === student.id
+      );
+
+      const total = studentAttendance.length;
+
+      const present = studentAttendance.filter(
+        (record) => record.status === "Present"
+      ).length;
+
+      const percentage =
+        total === 0
+          ? 0
+          : Number(((present / total) * 100).toFixed(2));
+
+      return {
+        id: student.id,
+        name: student.name,
+        rollNumber: student.rollNumber,
+        section: student.section,
+        present,
+        total,
+        percentage
+      };
+    });
+
+    res.status(200).json(report);
+
+  } catch (error) {
+    console.error("REPORT ERROR:", error);
+
+    res.status(500).json({
+      message: "Failed to fetch attendance report"
+    });
+  }
+};
 
 module.exports = {
   getStudentsForAttendance,
