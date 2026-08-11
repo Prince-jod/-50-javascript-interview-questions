@@ -9,7 +9,7 @@ require("dotenv").config();
 const sequelize = require("./config/db");
 require("./models/Association");
 const authRoutes = require("./routes/auth.routes");
-app.use("/password", passwordRoutes);
+
 
 const app = express();
 
@@ -21,6 +21,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/expenses", expenseRoutes);
 app.use("/api/payment", paymentRoutes);
 app.use("/api/leaderboard", leaderboardRoutes);
+app.use("/password", passwordRoutes);
 const passwordRoutes = require("./routes/password.routes");
 
 sequelize
