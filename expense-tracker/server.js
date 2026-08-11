@@ -9,6 +9,7 @@ require("dotenv").config();
 const sequelize = require("./config/db");
 require("./models/Association");
 const authRoutes = require("./routes/auth.routes");
+app.use("/password", passwordRoutes);
 
 const app = express();
 
