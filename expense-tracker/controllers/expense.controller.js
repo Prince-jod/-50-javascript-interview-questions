@@ -1,5 +1,5 @@
 const Expense = require("../models/Expense");
-
+const { categorizeExpense } = require("../services/geminiService");
 const createExpense = async (req, res) => {
   try {
     const { title, amount, category, date,name } = req.body;
