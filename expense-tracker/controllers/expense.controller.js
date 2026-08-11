@@ -2,14 +2,17 @@ const Expense = require("../models/Expense");
 const { categorizeExpense } = require("../services/geminiService");
 const createExpense = async (req, res) => {
   try {
-    const { title, amount, category, date,name } = req.body;
-    const userId = req.user.id; // comes from the verified token, not the body
+    const { title, amount, date, name } = req.body;
+    const userId = req.user.id;
 
     if (!title || !amount || !date) {
       return res.status(400).json({
         message: "Title, amount and date are required",
       });
     }
+
+    // Ask Gemini to automatically categorize the expense
+    const category = await categorizeExpense(title);
 
     const expense = await Expense.create({
       userId,
