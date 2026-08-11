@@ -20,6 +20,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/expenses", expenseRoutes);
 app.use("/api/payment", paymentRoutes);
 app.use("/api/leaderboard", leaderboardRoutes);
+const passwordRoutes = require("./routes/password.routes");
 
 sequelize
   .sync({alter:true})
