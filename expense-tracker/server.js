@@ -4,6 +4,7 @@ const path = require("path");
 const expenseRoutes = require("./routes/expense.routes");
 const paymentRoutes = require("./routes/payment.routes");
 const leaderboardRoutes = require("./routes/leaderboard.routes");
+const passwordRoutes = require("./routes/password.routes");
 require("dotenv").config();
 
 const sequelize = require("./config/db");
@@ -22,7 +23,7 @@ app.use("/api/expenses", expenseRoutes);
 app.use("/api/payment", paymentRoutes);
 app.use("/api/leaderboard", leaderboardRoutes);
 app.use("/password", passwordRoutes);
-const passwordRoutes = require("./routes/password.routes");
+
 
 sequelize
   .sync({alter:true})
