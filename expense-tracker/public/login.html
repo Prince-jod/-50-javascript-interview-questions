@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,6 +34,28 @@
             Login
         </button>
 
+        <!-- Forgot Password -->
+        <p>
+            <a href="#" id="forgotPasswordBtn">
+                Forgot Password?
+            </a>
+        </p>
+
+        <!-- Forgot Password Form -->
+        <div id="forgotPasswordForm" style="display: none;">
+
+            <input
+                type="email"
+                id="forgotEmail"
+                placeholder="Enter your email"
+            >
+
+            <button type="button" id="forgotSubmitBtn">
+                Send Reset Link
+            </button>
+
+        </div>
+
         <p>
             Don't have an account?
             <a href="signup.html">Register</a>
@@ -40,8 +63,13 @@
 
     </form>
 
+    <!-- Axios -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <!-- Your JS -->
     <script src="./js/login.js"></script>
 
 </body>
 
 </html>
+

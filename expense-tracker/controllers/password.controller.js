@@ -30,7 +30,7 @@ const forgotPassword = async (req, res) => {
     console.error("Forgot Password Error:", error);
 
     return res.status(500).json({
-      message: "Internal Server Error",
+      message: error.message ||"Internal Server Error",
     });
   }
 };
