@@ -1,51 +1,47 @@
-<form id="loginForm">
+<!DOCTYPE html>
+<html lang="en">
 
-    <h2>Login</h2>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Login</title>
 
-    <input
-        type="email"
-        id="email"
-        placeholder="Enter Email"
-        required
-    >
+    <link rel="stylesheet" href="./css/login.css">
+</head>
 
-    <input
-        type="password"
-        id="password"
-        placeholder="Enter Password"
-        required
-    >
+<body>
 
-    <button type="submit">
-        Login
-    </button>
+    <form id="loginForm">
 
-    <button type="button" id="forgotPasswordBtn">
-        Forgot Password?
-    </button>
+        <h2>Login</h2>
 
-    <p>
-        Don't have an account?
-        <a href="signup.html">Register</a>
-    </p>
+        <input
+            type="email"
+            id="email"
+            placeholder="Enter Email"
+            required
+        >
 
-</form>
+        <input
+            type="password"
+            id="password"
+            placeholder="Enter Password"
+            required
+        >
 
+        <button type="submit">
+            Login
+        </button>
 
-<!-- Separate form OUTSIDE loginForm -->
-<form id="forgotPasswordForm" style="display: none;">
+        <p>
+            Don't have an account?
+            <a href="signup.html">Register</a>
+        </p>
 
-    <h3>Forgot Password</h3>
+    </form>
 
-    <input
-        type="email"
-        id="forgotEmail"
-        placeholder="Enter your email"
-        required
-    >
+    <script src="./js/login.js"></script>
 
-    <button type="submit">
-        Send Email
-    </button>
+</body>
 
-</form>
+</html>
