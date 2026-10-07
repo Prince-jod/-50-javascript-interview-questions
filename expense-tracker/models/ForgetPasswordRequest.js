@@ -21,9 +21,9 @@ const ForgetPasswordRequest = sequelize.define(
     },
   },
   {
-    tableName: "ForgotPasswordRequests",
+    tableName: "ForgetPasswordRequests",
     timestamps: true,
   }
 );
 
-module.exports = ForgotPasswordRequest;
+module.exports = ForgetPasswordRequest;
