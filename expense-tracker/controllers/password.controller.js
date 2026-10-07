@@ -1,5 +1,5 @@
 const User = require("../models/User");
-const ForgotPasswordRequest = require("../models/ForgotPasswordRequest");
+const ForgetPasswordRequest = require("../models/ForgetPasswordRequest");
 const { sendForgotPasswordEmail } = require("../services/emailService");
 
 const { v4: uuidv4 } = require("uuid");
@@ -30,7 +30,7 @@ const forgotPassword = async (req, res) => {
     const resetId = uuidv4();
 
     // 4. Create forgot password request
-    const forgotRequest = await ForgotPasswordRequest.create({
+    const forgotRequest = await ForgetPasswordRequest.create({
       id: resetId,
       userId: user.id,
       isActive: true,
