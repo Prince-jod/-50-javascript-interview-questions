@@ -1,7 +1,11 @@
-const User = require('./User');
-const Expense = require('./Expense');
+const User = require("./User");
+const Expense = require("./Expense");
 const Order = require("./Order");
-// user <-----> expense
+const ForgetPasswordRequest = require("./ForgetPasswordRequest");
+
+
+// User <-----> Expense
+
 User.hasMany(Expense, {
   foreignKey: "userId",
 });
@@ -9,6 +13,10 @@ User.hasMany(Expense, {
 Expense.belongsTo(User, {
   foreignKey: "userId",
 });
+
+
+// User <-----> Order
+
 User.hasMany(Order, {
   foreignKey: "userId",
 });
@@ -17,8 +25,21 @@ Order.belongsTo(User, {
   foreignKey: "userId",
 });
 
+
+// User <-----> ForgotPasswordRequest
+
+User.hasMany(ForgotPasswordRequest, {
+  foreignKey: "userId",
+});
+
+ForgotPasswordRequest.belongsTo(User, {
+  foreignKey: "userId",
+});
+
+
 module.exports = {
   User,
   Expense,
   Order,
+  ForgetPasswordRequest,
 };
