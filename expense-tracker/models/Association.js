@@ -26,13 +26,13 @@ Order.belongsTo(User, {
 });
 
 
-// User <-----> ForgotPasswordRequest
+// User <-----> ForgetPasswordRequest
 
-User.hasMany(ForgotPasswordRequest, {
+User.hasMany(ForgetPasswordRequest, {
   foreignKey: "userId",
 });
 
-ForgotPasswordRequest.belongsTo(User, {
+ForgetPasswordRequest.belongsTo(User, {
   foreignKey: "userId",
 });
 
