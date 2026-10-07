@@ -26,7 +26,7 @@ app.use("/password", passwordRoutes);
 
 
 sequelize
-  .sync({alter:true})
+  .sync()
   .then(() => {
     console.log("Database connected and models synced.");
   })

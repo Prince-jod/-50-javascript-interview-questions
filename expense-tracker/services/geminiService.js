@@ -37,7 +37,7 @@ Do not return any explanation.
 
     const category = response.text.trim();
 
-    // Make sure Gemini returns only a category we allow
+    
     if (categories.includes(category)) {
         return category;
     }

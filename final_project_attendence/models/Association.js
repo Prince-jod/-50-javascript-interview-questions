@@ -1,4 +1,4 @@
-const Student = require("./Student");
+const Student = require("./student");
 const Attendance = require("./Attendance");
 
 Student.hasMany(Attendance, {

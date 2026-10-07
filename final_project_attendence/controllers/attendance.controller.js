@@ -1,4 +1,4 @@
-const Student = require("../models/Student");
+const Student = require("../models/student");
 const Attendance = require("../models/Attendance");
 const sequelize = require("../config/db");
 
