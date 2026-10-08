@@ -56,7 +56,7 @@ forgotSubmitBtn.addEventListener("click", async () => {
 
   try {
 
-    const response = await axios.post("/api/password/forgotpassword", {
+    const response = await axios.post("/api/password/forgetpassword", {
       email: email
     });
 
