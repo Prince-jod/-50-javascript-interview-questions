@@ -2,12 +2,12 @@ const express = require("express");
 
 const router = express.Router();
 
-const { forgetPassword } = require("../controllers/forgetPassword.controller");
+const { forgetPassword } = require("../controllers/forgetPassword.jsr");
 
 const {
   showResetPasswordForm,
   resetPassword,
-} = require("../controllers/resetPassword.controller");
+} = require("../controllers/resetPassword.js");
 
 
 router.post("/forgetpassword", forgetPassword);
