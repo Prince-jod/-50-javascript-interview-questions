@@ -1,10 +1,9 @@
 const User = require("../models/User");
-const ForgetPasswordRequest = require("../models/ForgetPasswordRequest");
+const ForgetPassword = require("../models/ForgetPassword");
 const { sendForgotPasswordEmail } = require("../services/emailService");
-
 const { v4: uuidv4 } = require("uuid");
 
-const forgotPassword = async (req, res) => {
+const forgetPassword = async (req, res) => {
   try {
     const { email } = req.body;
 
@@ -29,22 +28,22 @@ const forgotPassword = async (req, res) => {
     // 3. Generate UUID
     const resetId = uuidv4();
 
-    // 4. Create forgot password request
-    const forgotRequest = await ForgetPasswordRequest.create({
+    // 4. Create forget password request
+    const forgetRequest = await ForgetPassword.create({
       id: resetId,
       userId: user.id,
       isActive: true,
     });
 
-    console.log("Reset UUID:", forgotRequest.id);
+    console.log("Reset UUID:", forgetRequest.id);
 
     // 5. Create reset URL
     const resetUrl =
-      `http://localhost:3000/api/password/resetpassword/${forgotRequest.id}`;
+      `http://localhost:3000/api/password/resetpassword/${forgetRequest.id}`;
 
     console.log("Reset URL:", resetUrl);
 
-    // 6. Try sending email
+    // 6. Send email
     try {
       await sendForgotPasswordEmail(email, resetUrl);
 
@@ -53,10 +52,9 @@ const forgotPassword = async (req, res) => {
       });
 
     } catch (emailError) {
-
       console.error("Email Error:", emailError);
 
-      // Email failed, but request already exists in DB
+      // Request is already saved in DB
       return res.status(200).json({
         message: "Reset request created, but email could not be sent.",
         resetUrl: resetUrl,
@@ -64,7 +62,7 @@ const forgotPassword = async (req, res) => {
     }
 
   } catch (error) {
-    console.error("Forgot Password Error:", error);
+    console.error("Forget Password Error:", error);
 
     return res.status(500).json({
       message: error.message || "Internal Server Error",
@@ -73,5 +71,5 @@ const forgotPassword = async (req, res) => {
 };
 
 module.exports = {
-  forgotPassword,
+  forgetPassword,
 };

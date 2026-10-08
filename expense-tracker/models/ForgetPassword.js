@@ -1,13 +1,13 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/db");
 
-const ForgetPasswordRequest = sequelize.define(
-  "ForgetPasswordRequest",
+const ForgetPassword = sequelize.define(
+  "ForgetPassword",
   {
     id: {
       type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
+      allowNull: false,
     },
 
     userId: {
@@ -21,9 +21,9 @@ const ForgetPasswordRequest = sequelize.define(
     },
   },
   {
-    tableName: "ForgetPasswordRequests",
+    tableName: "ForgetPasswords",
     timestamps: true,
   }
 );
 
-module.exports = ForgetPasswordRequest;
+module.exports = ForgetPassword;
