@@ -37,15 +37,20 @@ const getLeaderboard = async (req, res) => {
             ],
 
             // Ignore empty/space-only names
-            where: Expense.sequelize.where(
-                Expense.sequelize.fn(
-                    "TRIM",
-                    Expense.sequelize.col("name")
-                ),
-                {
-                    [Op.ne]: "",
-                }
+           where: {
+    userId: req.user.id,
+    [Op.and]: [
+        Expense.sequelize.where(
+            Expense.sequelize.fn(
+                "TRIM",
+                Expense.sequelize.col("name")
             ),
+            {
+                [Op.ne]: "",
+            }
+        ),
+    ],
+},
 
             // Same name = same leaderboard entry
             group: ["name"],

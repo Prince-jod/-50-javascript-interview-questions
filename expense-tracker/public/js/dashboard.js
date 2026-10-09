@@ -291,6 +291,87 @@ function renderTotal() {
 
 }
 
+// =====================================================
+// DOWNLOAD EXPENSES — PREMIUM FEATURE
+// =====================================================
+
+const downloadExpensesBtn =
+document.getElementById("downloadExpensesBtn");
+
+function updateDownloadButton() {
+if (!downloadExpensesBtn) return;
+
+
+const isPremium = user && user.isPrime === true;
+
+downloadExpensesBtn.disabled = !isPremium;
+
+downloadExpensesBtn.title = isPremium
+    ? "Download your expenses"
+    : "Upgrade to Premium to download expenses";
+
+}
+
+if (downloadExpensesBtn) {
+downloadExpensesBtn.addEventListener("click", () => {
+if (!user || user.isPrime !== true) {
+alert("Upgrade to Premium to download expenses.");
+return;
+}
+
+    if (expensesCache.length === 0) {
+        alert("No expenses available to download.");
+        return;
+    }
+
+    const headers = [
+        "Name",
+        "Date",
+        "Title",
+        "Category",
+        "Amount"
+    ];
+
+    const rows = expensesCache.map(expense => [
+        expense.name,
+        expense.date,
+        expense.title,
+        expense.category,
+        expense.amount
+    ]);
+
+    const csvContent = [headers, ...rows]
+        .map(row =>
+            row.map(value =>
+                `"${String(value ?? "").replace(/"/g, '""')}"`
+            ).join(",")
+        )
+        .join("\r\n");
+
+    const blob = new Blob(
+        ["\uFEFF" + csvContent],
+        { type: "text/csv;charset=utf-8;" }
+    );
+
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = "my-expenses.csv";
+
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    URL.revokeObjectURL(url);
+});
+
+}
+
+// Set initial button state
+updateDownloadButton();
+
+
 
 // =====================================================
 // START EDIT EXPENSE
