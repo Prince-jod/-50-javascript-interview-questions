@@ -298,27 +298,16 @@ function renderTotal() {
 const downloadExpensesBtn =
 document.getElementById("downloadExpensesBtn");
 
-function updateDownloadButton() {
-if (!downloadExpensesBtn) return;
-
-
-const isPremium = user && user.isPrime === true;
-
-downloadExpensesBtn.disabled = !isPremium;
-
-downloadExpensesBtn.title = isPremium
-    ? "Download your expenses"
-    : "Upgrade to Premium to download expenses";
-
-}
-
 if (downloadExpensesBtn) {
 downloadExpensesBtn.addEventListener("click", () => {
-if (!user || user.isPrime !== true) {
-alert("Upgrade to Premium to download expenses.");
-return;
-}
 
+    // Check premium status when the button is clicked
+    if (!user || user.isPrime !== true) {
+        alert("Please buy Premium Membership to download your expenses.");
+        return;
+    }
+
+    // Check whether expenses exist
     if (expensesCache.length === 0) {
         alert("No expenses available to download.");
         return;
@@ -368,8 +357,6 @@ return;
 
 }
 
-// Set initial button state
-updateDownloadButton();
 
 
 
