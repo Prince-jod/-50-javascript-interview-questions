@@ -291,71 +291,173 @@ function renderTotal() {
 
 }
 
+
 // =====================================================
-// DOWNLOAD EXPENSES — PREMIUM FEATURE
+// DOWNLOAD EXPENSES AS PDF — PREMIUM FEATURE
 // =====================================================
 
-const downloadExpensesBtn =
-document.getElementById("downloadExpensesBtn");
+const downloadExpensesBtn = document.getElementById("downloadExpensesBtn");
 
 if (downloadExpensesBtn) {
-downloadExpensesBtn.addEventListener("click", () => {
+    downloadExpensesBtn.addEventListener("click", () => {
 
-    // Check premium status when the button is clicked
-    if (!user || user.isPrime !== true) {
-        alert("Please buy Premium Membership to download your expenses.");
-        return;
-    }
+        // 1. Check premium membership
+        if (!user || user.isPrime !== true) {
+            alert("Please buy Premium Membership to download your expenses.");
+            return;
+        }
 
-    // Check whether expenses exist
-    if (expensesCache.length === 0) {
-        alert("No expenses available to download.");
-        return;
-    }
+        // 2. Check whether expenses exist
+        if (expensesCache.length === 0) {
+            alert("No expenses available to download.");
+            return;
+        }
 
-    const headers = [
-        "Name",
-        "Date",
-        "Title",
-        "Category",
-        "Amount"
-    ];
+        // 3. Check whether PDF libraries are loaded
+        if (
+            !window.jspdf ||
+            typeof window.jspdf.jsPDF !== "function"
+        ) {
+            alert("PDF library not loaded. Please refresh the page.");
+            return;
+        }
 
-    const rows = expensesCache.map(expense => [
-        expense.name,
-        expense.date,
-        expense.title,
-        expense.category,
-        expense.amount
-    ]);
+        try {
+            // 4. Create PDF
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
 
-    const csvContent = [headers, ...rows]
-        .map(row =>
-            row.map(value =>
-                `"${String(value ?? "").replace(/"/g, '""')}"`
-            ).join(",")
-        )
-        .join("\r\n");
+            // 5. Add report title
+            doc.setFontSize(20);
+            doc.setFont("helvetica", "bold");
 
-    const blob = new Blob(
-        ["\uFEFF" + csvContent],
-        { type: "text/csv;charset=utf-8;" }
-    );
+            doc.text("EXPENSE REPORT", 105, 20, {
+                align: "center"
+            });
 
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
+            // 6. Add user and report information
+            doc.setFontSize(10);
+            doc.setFont("helvetica", "normal");
 
-    link.href = url;
-    link.download = "my-expenses.csv";
+            doc.text(`User: ${user.name || "User"}`, 14, 32);
 
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
+            doc.text(
+                `Generated On: ${new Date().toLocaleDateString("en-IN")}`,
+                14,
+                39
+            );
 
-    URL.revokeObjectURL(url);
-});
+            doc.text(
+                `Total Records: ${expensesCache.length}`,
+                14,
+                46
+            );
 
+            // 7. Calculate total expenses
+            const totalAmount = expensesCache.reduce(
+                (sum, expense) => sum + Number(expense.amount || 0),
+                0
+            );
+
+            // 8. Prepare table rows
+            const tableRows = expensesCache.map(expense => [
+                String(expense.name ?? ""),
+                String(expense.date ?? ""),
+                String(expense.title ?? ""),
+                String(expense.category ?? ""),
+                `Rs. ${Number(expense.amount || 0).toFixed(2)}`
+            ]);
+
+            // 9. Generate formatted expense table
+            doc.autoTable({
+                startY: 55,
+
+                head: [[
+                    "Name",
+                    "Date",
+                    "Title",
+                    "Category",
+                    "Amount"
+                ]],
+
+                body: tableRows,
+
+                theme: "grid",
+
+                styles: {
+                    fontSize: 9,
+                    cellPadding: 3,
+                    overflow: "linebreak"
+                },
+
+                headStyles: {
+                    fillColor: [41, 98, 255],
+                    textColor: 255,
+                    fontStyle: "bold"
+                },
+
+                columnStyles: {
+                    0: { cellWidth: 32 },
+                    1: { cellWidth: 27 },
+                    2: { cellWidth: 45 },
+                    3: { cellWidth: 35 },
+                    4: { cellWidth: 37, halign: "right" }
+                },
+
+                margin: {
+                    left: 14,
+                    right: 14,
+                    bottom: 20
+                },
+
+                // Add page numbers and footer
+                didDrawPage: function () {
+                    const pageHeight = doc.internal.pageSize.height;
+                    const pageNumber =
+                        doc.internal.getCurrentPageInfo().pageNumber;
+
+                    doc.setFontSize(9);
+                    doc.setFont("helvetica", "normal");
+
+                    doc.text("Expense Report", 14, pageHeight - 10);
+
+                    doc.text(
+                        `Page ${pageNumber}`,
+                        196,
+                        pageHeight - 10,
+                        { align: "right" }
+                    );
+                }
+            });
+
+            // 10. Add total expenses after the table
+            let finalY = doc.lastAutoTable.finalY + 12;
+
+            if (finalY > doc.internal.pageSize.height - 20) {
+                doc.addPage();
+                finalY = 20;
+            }
+
+            doc.setFontSize(12);
+            doc.setFont("helvetica", "bold");
+
+            doc.text(
+                `TOTAL EXPENSES: Rs. ${totalAmount.toFixed(2)}`,
+                14,
+                finalY
+            );
+
+            // 11. Download the PDF
+            doc.save("Expense_Report.pdf");
+
+        } catch (error) {
+            console.error("PDF Download Error:", error);
+
+            alert("Unable to generate PDF. Please try again.");
+        }
+    });
 }
+
 
 
 
