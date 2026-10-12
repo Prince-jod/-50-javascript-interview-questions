@@ -35,7 +35,7 @@ sequelize
     console.log("Database Error:", err);
   });
 
-const port = 3000;
+const port = process.env.PORT || 5000;
 
 app.get("/", (req, res) => {
   res.redirect("/login");
