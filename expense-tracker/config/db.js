@@ -4,7 +4,9 @@ const path = require("path");
 
 require("dotenv").config();
 
-const caPath = path.join(__dirname, "..", "certs", "ca.pem");
+const caPath = process.env.NODE_ENV === "production"
+  ? "/etc/secrets/ca.pem"
+  : path.join(__dirname, "..", "certs", "ca.pem");
 
 const sequelize = new Sequelize(
   process.env.DB_NAME,
